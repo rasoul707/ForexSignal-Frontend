@@ -31,7 +31,7 @@ const SignalsList = () => {
                 <List sx={{ bgcolor: 'background.paper' }}>
                     {signalsList.map(({ title, description, image, broker }, index) => {
                         return <>
-                            <ListItem alignItems="flex-start">
+                            <ListItem alignItems="flex-start" key={index}>
                                 <ListItemAvatar>
                                     <Avatar alt={title} src={image?.thumbnail || "/no-avatar"} />
                                 </ListItemAvatar>
