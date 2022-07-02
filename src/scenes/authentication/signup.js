@@ -1,0 +1,166 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { TextField, Button, Checkbox, FormControlLabel, Typography, Grid, Card } from "@mui/material"
+import { LoadingButton } from '@mui/lab'
+import { Link as LinkRoute, useHistory } from "react-router-dom"
+import { useState } from "react";
+import Logo from "../../components/Logo"
+import * as API from "../../api";
+import { useSnackbar } from 'notistack';
+import validex from 'validex'
+
+
+
+const SignUp = () => {
+
+    const { enqueueSnackbar } = useSnackbar()
+    const history = useHistory()
+
+    const [disabled, setDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [acceptTerms, setAcceptTerms] = useState('');
+
+
+
+    const submit = async () => {
+
+        if (!acceptTerms) {
+            return enqueueSnackbar("You must accept terms", { variant: "error" })
+        }
+
+
+
+        const data = {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            password: password,
+        }
+        const schema = {
+            first_name: {
+                nameAlias: "First Name",
+                required: true,
+                type: 'string',
+                min: 3,
+            },
+            last_name: {
+                nameAlias: "Last Name",
+                required: true,
+                type: 'string',
+                min: 3,
+            },
+            email: {
+                nameAlias: "Email",
+                required: true,
+                type: 'string',
+                email: true,
+            },
+            password: {
+                nameAlias: "Password",
+                required: true,
+                type: 'string',
+                mediumPassword: true,
+            },
+        }
+
+        const validator = validex(data, schema)
+        const isValidate = validator.validate()
+
+        if (!isValidate) {
+            const errors = validator.getError()
+            return enqueueSnackbar(Object.values(errors)[0], { variant: "error" })
+        }
+
+        setDisabled(true)
+        setLoading(true)
+
+
+
+        try {
+            await API.POST(false)('auth/register/', data)
+            enqueueSnackbar("Good, now we send an email to verify your email address", { variant: 'success' })
+            setLoading(false)
+            localStorage.setItem('Verify_EmailAddress', email)
+            history.push('/auth/verify')
+        } catch (error) {
+            enqueueSnackbar("[signUp]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
+            setDisabled(false)
+            setLoading(false)
+        }
+    }
+
+    return (
+        <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
+            <Grid container direction="column">
+                <Logo />
+                <Typography align="center" variant="h6">Sign up</Typography>
+                <TextField
+                    label="First name"
+                    variant="filled"
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    value={firstName}
+                    onChange={(e) => { setFirstName(e.target.value) }}
+                    disabled={disabled}
+                />
+                <TextField
+                    label="Last name"
+                    variant="filled"
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    value={lastName}
+                    onChange={(e) => { setLastName(e.target.value) }}
+                    disabled={disabled}
+                />
+                <TextField
+                    label="Email"
+                    variant="filled"
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value) }}
+                    disabled={disabled}
+                />
+                <TextField
+                    label="Password"
+                    variant="filled"
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    type="password"
+                    value={password}
+                    onChange={(e) => { setPassword(e.target.value) }}
+                    disabled={disabled}
+                />
+                <FormControlLabel
+                    label="I agree to all terms and conditions."
+                    control={<Checkbox />}
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                    disabled={disabled}
+                />
+                <LoadingButton
+                    variant="contained"
+                    size="large"
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    children="Sign Up"
+                    onClick={submit}
+                    disabled={disabled}
+                    loading={loading}
+                />
+                <Button
+                    component={LinkRoute}
+                    to="/auth/signin"
+                    size="small"
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    children="Sign in instead"
+                    disabled={disabled}
+                />
+            </Grid>
+        </Card>
+    );
+
+
+}
+export default SignUp; 

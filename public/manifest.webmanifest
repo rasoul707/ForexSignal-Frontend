@@ -1,0 +1,42 @@
+{
+  "id": "fxsignal",
+  "short_name": "Forex Signal System",
+  "name": "Forex Signal System",
+  "description": "Send signals of brokers to app",
+  "icons": [
+    {
+      "src": "masked_logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "masked_logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ff5e34",
+  "orientation": "portrait",
+  "scope": ".",
+  "background_color": "#ffffff",
+  "shortcuts": []
+}

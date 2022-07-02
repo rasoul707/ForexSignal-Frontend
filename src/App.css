@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  background-color: #dddddd;
+}
+
+input {
+  border-radius: inherit !important;
+}
+
+@keyframes auth-bg-move {
+  0% {
+    background-position: 0 0
+  }
+
+  50% {
+    background-position: 100% 0
+  }
+
+  100% {
+    background-position: 0 0
+  }
+}
+
+
+.auth-container {
+  background-size: 200% 100% !important;
+  animation: auth-bg-move 5s ease infinite;
+  transform: translate3d(0, 0, 0);
+  background: linear-gradient(45deg, #49D49D 10%, #A2C7E5 90%);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  overflow-x: hidden;
+}
