@@ -15,17 +15,7 @@ import Profile from "./Profile"
 import { useSnackbar } from 'notistack';
 
 import { wsSignals, wsArticles } from "../../api/socket"
-import useAudio from "../../hooks/useAudio"
 
-async function askUserPermission() {
-    return await Notification.requestPermission();
-}
-
-
-async function setNativeNotification() {
-    // return await Notification.
-
-}
 
 
 
@@ -49,7 +39,7 @@ const Panel = () => {
             wsConnection()
         }, 500)
 
-        askUserPermission()
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
