@@ -38,7 +38,7 @@ const Panel = () => {
 
 
     if (!user) return null;
-    return <Box>
+    return <Box sx={{ mb: 7 }}>
         <AppBar />
         <Box component="main" sx={{ p: 3, }} >
             <Switch>
@@ -51,10 +51,6 @@ const Panel = () => {
             </Switch>
         </Box>
         <BottomNavigationMenu />
-
-
     </Box>
-
-
 }
 export default Panel;

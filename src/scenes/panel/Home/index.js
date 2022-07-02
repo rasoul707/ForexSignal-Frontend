@@ -10,6 +10,11 @@ import SignalsList from './SignalsList';
 const Page = () => {
     const user = useSelector(state => state.auth.user)
 
+    return [
+        <ChooseBroker />,
+        <ChooseBroker />,
+        <ChooseBroker />,
+    ]
     if (user.broker) return <SignalsList />
     else return <ChooseBroker />
 }

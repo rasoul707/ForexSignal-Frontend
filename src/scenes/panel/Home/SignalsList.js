@@ -45,9 +45,9 @@ const SignalsList = () => {
     </>
 
     return <>
-        <Grid container justifyContent="center" >
+        <Grid container justifyContent="center">
             <Grid item lg={6} md={8} sm={10} xs={12}>
-                <List sx={{ bgcolor: 'background.paper', mb: 7 }}>
+                <List sx={{ bgcolor: 'background.paper' }}>
                     {signalList.map(({ title, description, image, broker }, index) => {
                         return <>
                             <ListItem alignItems="flex-start">
@@ -74,9 +74,6 @@ const SignalsList = () => {
                             {(index + 1 !== signalList.length) ? < Divider variant="inset" component="li" /> : null}
                         </>
                     })}
-
-
-
                 </List>
             </Grid>
         </Grid>
