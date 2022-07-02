@@ -4,7 +4,7 @@ import BottomNavigationMenu from "../../components/BottomNavigationMenu"
 import { Box } from "@mui/material"
 
 import React, { useEffect } from 'react'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import queryString from "query-string";
 
 
@@ -15,6 +15,8 @@ import Profile from "./Profile"
 import { useSnackbar } from 'notistack';
 
 import { wsSignals, wsArticles } from "../../api/socket"
+import * as API from "../../api";
+
 
 
 
@@ -27,6 +29,10 @@ const Panel = () => {
 
 
     const user = useSelector(state => state.auth.user)
+    const signalsList = useSelector(state => state.panel)
+
+    const dispatch = useDispatch()
+
     useEffect(() => {
         const parsed = queryString.parse(location.search);
         if (parsed.ref) {
@@ -35,27 +41,56 @@ const Panel = () => {
         }
         if (!user) history.replace("/auth")
 
-        setTimeout(() => {
-            wsConnection()
-        }, 500)
-
+        getSignalsAlertList()
+        getArticlesList()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const getSignalsAlertList = async () => {
+        try {
+            const response = await API.GET(true)('notice/signal/?broker=' + user.broker)
+            dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
+
+            wsSignals().onmessage = function (event) {
+                const data = JSON.parse(event.data);
+                const m = {
+                    broker: { id: 1, name: "Alpary", logo: 1 },
+                    broker_id: 1,
+                    description: "fdgdfgddhfdhfd",
+                    id: 2,
+                    image: null,
+                    image_id: null,
+                    is_active: true,
+                    title: "Test " + Math.random(),
+                }
+
+                dispatch({
+                    type: 'SIGNAL_LIST_ADD',
+                    payload: { signal: m }
+                })
+
+                enqueueSnackbar("New Signal Received", { variant: 'info' })
+            }
+
+        } catch (error) {
+            enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
+        }
+    }
+
+    const getArticlesList = async () => {
+
+    }
+
 
     const wsConnection = () => {
-        wsSignals.onmessage = function (event) {
-            const json = JSON.parse(event.data);
-            enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
-            // toggleNotify()
-        }
 
-        wsArticles.onmessage = function (event) {
-            const json = JSON.parse(event.data);
-            enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
-            // toggleNotify()
-        }
+
+        // wsArticles.onmessage = function (event) {
+        //     const json = JSON.parse(event.data);
+        //     enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
+        //     // toggleNotify()
+        // }
     }
 
 

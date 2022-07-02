@@ -5,7 +5,7 @@ import * as API from "./api";
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { Backdrop, CircularProgress } from '@mui/material';
-
+// import * as fb from './firebase'
 
 import './App.css';
 
@@ -71,9 +71,16 @@ function App() {
     appLoader(false)
   }
 
+  const firebaseMessaging = () => {
+
+
+
+  }
+
 
   useEffect(() => {
     verifyToken()
+    firebaseMessaging()
   }, [])
 
 

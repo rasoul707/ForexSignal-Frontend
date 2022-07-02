@@ -18,8 +18,8 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-serviceWorker.register();
-// serviceWorker.unregister();
+// serviceWorker.register();
+serviceWorker.unregister();
 
 
 reportWebVitals();
