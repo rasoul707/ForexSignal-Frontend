@@ -15,7 +15,7 @@ import Profile from "./Profile"
 import { useSnackbar } from 'notistack';
 
 import { wsSignals, wsArticles } from "../../api/socket"
-
+import useAudio from "../../hooks/useAudio"
 
 
 
@@ -24,6 +24,7 @@ const Panel = () => {
     const history = useHistory()
     const location = useLocation()
     const { enqueueSnackbar, } = useSnackbar()
+    const [playing, toggleNotify] = useAudio("../../assets/audio/notify.wav")
 
     const user = useSelector(state => state.auth.user)
     useEffect(() => {
@@ -45,11 +46,13 @@ const Panel = () => {
         wsSignals.onmessage = function (event) {
             const json = JSON.parse(event.data);
             enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
+            toggleNotify()
         }
 
         wsArticles.onmessage = function (event) {
             const json = JSON.parse(event.data);
             enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
+            toggleNotify()
         }
     }
 
