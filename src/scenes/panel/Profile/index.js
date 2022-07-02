@@ -167,7 +167,7 @@ const Page = () => {
                                             <InputAdornment position="end">
                                                 <IconButton
                                                     onClick={() => {
-                                                        navigator.clipboard.writeText(getReferralLink(user.token))
+                                                        navigator.clipboard?.writeText(getReferralLink(user.token))
                                                         enqueueSnackbar("Your referral link copied in clipboard", { variant: 'success' })
                                                     }}
                                                 >

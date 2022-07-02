@@ -7,15 +7,14 @@ import React, { useEffect } from 'react'
 import { useSelector } from "react-redux";
 import queryString from "query-string";
 
-// import NewSoftware from "./NewSoftware"
-// import Softwares from "./Softwares"
-// import Evaluations from "./Evaluations"
 
 import Home from "./Home"
 import Articles from "./Articles"
 import Help from "./Help"
 import Profile from "./Profile"
-// import Settings from "./Settings"
+
+import { wsSignals, wsArticles } from "../../api/socket"
+
 
 
 
@@ -31,8 +30,25 @@ const Panel = () => {
             else localStorage.setItem('ref', parsed.ref)
         }
         if (!user) history.replace("/auth")
+
+        setTimeout(() => {
+            wsConnection()
+        }, 500)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+
+    const wsConnection = () => {
+        wsSignals.onmessage = function (event) {
+            const json = JSON.parse(event.data);
+            console.log('signal', json)
+        }
+
+        wsArticles.onmessage = function (event) {
+            const json = JSON.parse(event.data);
+            console.log('article', json)
+        }
+    }
 
 
 
@@ -46,7 +62,6 @@ const Panel = () => {
                 <Route path="/help" component={Help} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/" component={Home} />
-
                 <Redirect to="/" />
             </Switch>
         </Box>
