@@ -19,7 +19,7 @@ ReactDOM.render(
 );
 
 serviceWorker.register();
-// serviceWorker.register();
+// serviceWorker.unregister();
 
 
 reportWebVitals();

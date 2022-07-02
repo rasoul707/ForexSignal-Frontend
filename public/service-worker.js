@@ -31,6 +31,8 @@ self.addEventListener('fetch', async event => {
     }
 });
 
+
+
 async function cacheFirst(req) {
     const cache = await caches.open(cacheName);
     const cached = await cache.match(req);

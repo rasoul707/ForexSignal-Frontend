@@ -15,19 +15,18 @@ const isLocalhost = Boolean(
     // [::1] is the IPv6 localhost address.
     window.location.hostname === '[::1]' ||
     // 127.0.0.0/8 are considered localhost for IPv4.
-    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/) ||
-    // 192.0.0.0/8 are considered localhost for IPv4.
-    window.location.hostname === '192.168.30.244'
+    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
 );
 
+
+
+
 export function register(config) {
-    console.log(process.env.NODE_ENV, "ssss", navigator)
     if (process.env.NODE_ENV === 'development' && 'serviceWorker' in navigator) {
         console.log("nnnn")
         // The URL constructor is available in all browsers that support SW.
         const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
         if (publicUrl.origin !== window.location.origin) {
-            console.log("pppp")
             // Our service worker won't work if PUBLIC_URL is on a different origin
             // from what our page is served on. This might happen if a CDN is used to
             // serve assets; see https://github.com/facebook/create-react-app/issues/2374
@@ -50,10 +49,7 @@ export function register(config) {
                     );
                 });
 
-                // // Then later, request a one-off sync:
-                // navigator.serviceWorker.ready.then(function (swRegistration) {
-                //     return swRegistration.sync.register('myFirstSync');
-                // });
+
 
             } else {
                 // Is not localhost. Just register service worker
@@ -63,6 +59,9 @@ export function register(config) {
 
     }
 }
+
+
+
 
 function registerValidSW(swUrl, config) {
     navigator.serviceWorker
