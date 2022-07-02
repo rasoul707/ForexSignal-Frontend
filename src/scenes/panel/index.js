@@ -12,6 +12,7 @@ import Home from "./Home"
 import Articles from "./Articles"
 import Help from "./Help"
 import Profile from "./Profile"
+import { useSnackbar } from 'notistack';
 
 import { wsSignals, wsArticles } from "../../api/socket"
 
@@ -21,7 +22,9 @@ import { wsSignals, wsArticles } from "../../api/socket"
 const Panel = () => {
 
     const history = useHistory()
-    const location = useLocation();
+    const location = useLocation()
+    const { enqueueSnackbar, } = useSnackbar()
+
     const user = useSelector(state => state.auth.user)
     useEffect(() => {
         const parsed = queryString.parse(location.search);
@@ -41,12 +44,12 @@ const Panel = () => {
     const wsConnection = () => {
         wsSignals.onmessage = function (event) {
             const json = JSON.parse(event.data);
-            console.log('signal', json)
+            enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
         }
 
         wsArticles.onmessage = function (event) {
             const json = JSON.parse(event.data);
-            console.log('article', json)
+            enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
         }
     }
 

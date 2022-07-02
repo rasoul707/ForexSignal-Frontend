@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, } from "react-redux";
 
-import { Grid, List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar, Typography, Alert, CardContent } from '@mui/material';
+import { Grid, List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar, Typography, Alert } from '@mui/material';
 
 import * as API from "../../../api";
 import { useSnackbar } from 'notistack';
@@ -10,11 +10,8 @@ import { useSnackbar } from 'notistack';
 const SignalsList = () => {
 
     const user = useSelector(state => state.auth.user)
-    const dispatch = useDispatch();
-    const { enqueueSnackbar, } = useSnackbar()
 
-    const [disabled, setDisabled] = React.useState(false)
-    const [loading, setLoading] = React.useState(false)
+    const { enqueueSnackbar, } = useSnackbar()
 
     const [signalList, setSignalList] = React.useState([])
 
