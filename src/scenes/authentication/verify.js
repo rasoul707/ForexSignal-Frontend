@@ -4,16 +4,16 @@ import { useState } from "react";
 import Logo from "../../components/Logo"
 // import * as api from "../../api";
 // import { useSnackbar } from 'notistack';
-import { useHistory, useLocation } from "react-router-dom"
-import queryString from "query-string";
+// import { useHistory, useLocation } from "react-router-dom"
+// import queryString from "query-string";
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 
 const Verify = () => {
 
-    const history = useHistory()
-    const location = useLocation()
+    // const history = useHistory()
+    // const location = useLocation()
 
     const [verifyStatus, setVerifyStatus] = React.useState('FailedVerify')
 
@@ -33,33 +33,34 @@ const Verify = () => {
         setLoading(true)
         setCanChangeEmail(false)
 
-        const oldEmail = localStorage.getItem('VERIFICATIONEMAILADDRESS')
-        const newEmail = email
+        // const oldEmail = localStorage.getItem('VERIFICATIONEMAILADDRESS')
+        // const newEmail = email
 
     }
 
     React.useEffect(() => {
-        const data = async () => {
-            if (!localStorage.getItem('VERIFICATIONEMAILADDRESS')) {
-                history.replace("/")
-            }
+        setVerifyStatus(null)
+        // const data = async () => {
+        //     if (!localStorage.getItem('VERIFICATIONEMAILADDRESS')) {
+        //         history.replace("/")
+        //     }
 
-            const parsed = queryString.parse(location.search);
-            if (parsed.key) {
-                // send request to api
-                // await API.POST(false)('auth/register/verify-email//', data)
-            }
-            else {
+        //     const parsed = queryString.parse(location.search);
+        //     if (parsed.key) {
+        //         // send request to api
+        //         // await API.POST(false)('auth/register/verify-email//', data)
+        //     }
+        //     else {
 
-            }
+        //     }
 
 
-            /*
-            await API.POST(false)('auth/register/resend-email/', data)
-            await API.POST(false)('auth/register/verify-email//', data)
-    
-            */
-        }
+        //     /*
+        //     await API.POST(false)('auth/register/resend-email/', data)
+        //     await API.POST(false)('auth/register/verify-email//', data)
+
+        //     */
+        // }
 
 
 

@@ -35,11 +35,13 @@ const Panel = () => {
 
     useEffect(() => {
         const parsed = queryString.parse(location.search);
-        if (parsed.ref) {
-            if (user) history.replace("/")
-            else localStorage.setItem('ref', parsed.ref)
+        if (!user) {
+            if (parsed.ref) {
+                localStorage.setItem('ref', parsed.ref)
+                history.replace("/auth/signup/")
+            }
+            else history.replace("/auth/signin/")
         }
-        if (!user) history.replace("/auth")
     }, [])
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import { Redirect, Route, Switch, useHistory, } from "react-router-dom"
 import SignIn from "./signin"
 import SignUp from "./signup"
-import Verify from "./verify"
+// import Verify from "./verify"
 import { useEffect } from 'react'
 import { useSelector } from "react-redux";
 
@@ -22,7 +22,7 @@ const Authentication = () => {
             <Switch>
                 <Route path="/auth/signin/" exact component={SignIn} />
                 <Route path="/auth/signup/" exact component={SignUp} />
-                <Route path="/auth/verify/" exact component={Verify} />
+                {/* <Route path="/auth/verify/" exact component={Verify} /> */}
                 <Redirect to="/auth/signin/" />
             </Switch>
         </div>

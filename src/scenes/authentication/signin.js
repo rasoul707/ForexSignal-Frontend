@@ -21,9 +21,7 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
 
 
-    React.useEffect(() => {
-        localStorage.clear()
-    }, [])
+
 
     const submit = async () => {
 

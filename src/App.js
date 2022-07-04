@@ -34,6 +34,7 @@ function App() {
         setInterval(async () => { await refreshToken() }, 30000)
       } catch (error) {
         await refreshToken()
+        await getUserInfo()
         setInterval(async () => { await refreshToken() }, 30000)
       }
     }
@@ -44,8 +45,6 @@ function App() {
       appLoader(false)
     }
   }
-
-
 
 
   const refreshToken = async () => {

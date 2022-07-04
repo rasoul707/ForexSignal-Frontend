@@ -26,9 +26,11 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [acceptTerms, setAcceptTerms] = useState('');
+    const [refToken, setRefToken] = useState('');
+
 
     React.useEffect(() => {
-        localStorage.clear()
+        setRefToken(localStorage.getItem('ref'))
     }, [])
 
     const submit = async () => {
@@ -46,6 +48,7 @@ const SignUp = () => {
             email: email,
             password1: password,
             password2: password,
+            ref: refToken
         }
         const schema = {
             first_name: {
@@ -95,10 +98,11 @@ const SignUp = () => {
 
         try {
             await API.POST(false)('auth/register/', data)
-            enqueueSnackbar("Good, now we send an email to verify your email address", { variant: 'success' })
+            enqueueSnackbar("Good, now you can login", { variant: 'success' })
             setLoading(false)
-            localStorage.setItem('VERIFICATIONEMAILADDRESS', email)
-            history.push('/auth/verify')
+
+            // localStorage.setItem('VERIFICATIONEMAILADDRESS', email)
+            history.push('/auth/signin/')
         } catch (error) {
             enqueueSnackbar("[signUp]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
             setDisabled(false)
