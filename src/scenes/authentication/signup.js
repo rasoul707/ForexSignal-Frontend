@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import * as React from "react"
 import { TextField, Button, Checkbox, FormControlLabel, Typography, Grid, Card } from "@mui/material"
 import { LoadingButton } from '@mui/lab'
 import { Link as LinkRoute, useHistory } from "react-router-dom"
@@ -21,11 +22,14 @@ const SignUp = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [acceptTerms, setAcceptTerms] = useState('');
 
-
+    React.useEffect(() => {
+        localStorage.clear()
+    }, [])
 
     const submit = async () => {
 
@@ -38,8 +42,10 @@ const SignUp = () => {
         const data = {
             first_name: firstName,
             last_name: lastName,
+            username: username,
             email: email,
-            password: password,
+            password1: password,
+            password2: password,
         }
         const schema = {
             first_name: {
@@ -54,13 +60,19 @@ const SignUp = () => {
                 type: 'string',
                 min: 3,
             },
+            username: {
+                nameAlias: "Username",
+                required: true,
+                type: 'string',
+                min: 3,
+            },
             email: {
                 nameAlias: "Email",
                 required: true,
                 type: 'string',
                 email: true,
             },
-            password: {
+            password1: {
                 nameAlias: "Password",
                 required: true,
                 type: 'string',
@@ -85,7 +97,7 @@ const SignUp = () => {
             await API.POST(false)('auth/register/', data)
             enqueueSnackbar("Good, now we send an email to verify your email address", { variant: 'success' })
             setLoading(false)
-            localStorage.setItem('Verify_EmailAddress', email)
+            localStorage.setItem('VERIFICATIONEMAILADDRESS', email)
             history.push('/auth/verify')
         } catch (error) {
             enqueueSnackbar("[signUp]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
@@ -113,6 +125,14 @@ const SignUp = () => {
                     sx={{ marginTop: (theme) => theme.spacing(2) }}
                     value={lastName}
                     onChange={(e) => { setLastName(e.target.value) }}
+                    disabled={disabled}
+                />
+                <TextField
+                    label="Username"
+                    variant="filled"
+                    sx={{ marginTop: (theme) => theme.spacing(2) }}
+                    value={username}
+                    onChange={(e) => { setUsername(e.target.value) }}
                     disabled={disabled}
                 />
                 <TextField

@@ -1,3 +1,6 @@
+import moment from "moment"
+
+
 const authInitial = {
     user: null
 }
@@ -35,7 +38,8 @@ export const appReducer = (state = appInitial, action) => {
 
 const panelInitial = {
     signalsList: null,
-    articles: null
+    articles: null,
+    licenseOk: false,
 }
 
 export const panelReducer = (state = panelInitial, action) => {
@@ -46,6 +50,9 @@ export const panelReducer = (state = panelInitial, action) => {
                 signalsList: action.payload.signalsList
             }
         case 'SIGNAL_LIST_ADD':
+            if (!action.payload.signal.id) {
+                action.payload.signal.created_datetime = moment().toISOString()
+            }
             return {
                 ...state,
                 signalsList: [action.payload.signal, ...state.signalsList]
@@ -54,6 +61,11 @@ export const panelReducer = (state = panelInitial, action) => {
             return {
                 ...state,
                 articles: action.payload.articles
+            }
+        case 'LICENSE_OK':
+            return {
+                ...state,
+                licenseOk: action.payload.licenseOk
             }
         default:
             return { ...state };

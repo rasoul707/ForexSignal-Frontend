@@ -1,6 +1,6 @@
-const baseUrl = 'ws://195.248.242.210:8000/ws/';
+import { WSBaseUrl as baseUrl } from "../config/server"
 
-export const wsSignals = () => new WebSocket(baseUrl + "signals/");
+export const wsSignals = (broker) => new WebSocket(baseUrl + "signal" + broker + "/");
 export const wsArticles = () => new WebSocket(baseUrl + "articles/");
 
 

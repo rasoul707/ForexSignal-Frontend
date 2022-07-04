@@ -1,11 +1,13 @@
-import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { BrowserRouter as Router, Switch, Route, Redirect, } from "react-router-dom";
 import Authentication from "./scenes/authentication";
 import Panel from "./scenes/panel";
 import * as API from "./api";
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Backdrop, CircularProgress } from '@mui/material';
-// import * as fb from './firebase'
+import { Backdrop, CircularProgress, } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import useNetworkStatus from './hooks/useNetworkStatus';
 
 import './App.css';
 
@@ -13,14 +15,13 @@ import './App.css';
 function App() {
 
   const [loadMain, setLoadMain] = useState(false)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const dispatch = useDispatch()
+  const { isOnline } = useNetworkStatus();
 
-
-
-  const dispatch = useDispatch();
 
   const appLoader = (payload) => dispatch({ type: 'BACKDROP', payload: { backdrop: payload } })
   const backdrop = useSelector(state => state.app.backdrop)
-
 
   const access_token = localStorage.getItem('access_token')
   const refresh_token = localStorage.getItem('refresh_token')
@@ -30,10 +31,10 @@ function App() {
       try {
         await API.POST(false)('auth/token/verify/', { token: access_token })
         await getUserInfo()
-        setInterval(async () => { await refreshToken() }, 60000)
+        setInterval(async () => { await refreshToken() }, 30000)
       } catch (error) {
         await refreshToken()
-        setInterval(async () => { await refreshToken() }, 60000)
+        setInterval(async () => { await refreshToken() }, 30000)
       }
     }
     else {
@@ -44,26 +45,36 @@ function App() {
     }
   }
 
+
+
+
   const refreshToken = async () => {
+    if (!isOnline) return
     try {
       const response = await API.POST(false)('auth/token/refresh/', { refresh: refresh_token })
       localStorage.setItem("access_token", response.data.access);
     } catch (error) {
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
-      setLoadMain(true)
-      appLoader(false)
-
-      window.location.reload()
+      if (error !== undefined) {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        setLoadMain(true)
+        appLoader(false)
+        window.location.reload()
+      }
     }
   }
-
 
   const getUserInfo = async () => {
     try {
       const response = await API.GET(true)('auth/user/')
       dispatch({ type: 'USER_INFO', payload: { user: response.data } })
+      if (!response.data.is_verified_email) {
+        localStorage.clear()
+        localStorage.setItem('VERIFICATIONEMAILADDRESS', response.data.email)
+        window.location.reload()
+      }
     } catch (error) {
+      localStorage.clear()
       window.location.reload()
     }
 
@@ -71,17 +82,29 @@ function App() {
     appLoader(false)
   }
 
-  const firebaseMessaging = () => {
-
-
-
-  }
 
 
   useEffect(() => {
     verifyToken()
-    firebaseMessaging()
   }, [])
+
+
+  useEffect(() => {
+    if (isOnline) {
+      closeSnackbar()
+    }
+    else {
+      enqueueSnackbar("Check your internet connection",
+        {
+          variant: 'error', persist: true,
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'center'
+          },
+          preventDuplicate: true
+        })
+    }
+  }, [isOnline])
 
 
   return <>
@@ -91,6 +114,8 @@ function App() {
       style={{ zIndex: 9999, backgroundColor: "#dddddd" }}
       children={<CircularProgress />}
     />
+
+
 
 
 

@@ -1,5 +1,4 @@
 import { useLocation, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
@@ -12,7 +11,6 @@ const BottomNavigationMenu = () => {
     const location = useLocation()
     const history = useHistory()
 
-    const user = useSelector(state => state.auth.user)
 
     return <>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>

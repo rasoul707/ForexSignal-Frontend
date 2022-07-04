@@ -1,6 +1,6 @@
 {
-  "name": "software_evaluation",
-  "version": "0.1.0",
+  "name": "forex_signal",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@mui/icons-material": "^5.2.5",

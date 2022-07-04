@@ -1,13 +1,14 @@
-const cacheName = "cache-v4";
+const cacheName = "cache-v5";
 const staticAssets = [
-    './',
-    './index.html',
-    './favicon.ico',
-    './manifest.json',
-    './logo192.png',
-    './logo512.png',
-    './masked_logo192.png',
-    './masked_logo512.png',
+    '/',
+    '/bundle.js',
+    '/index.html',
+    '/favicon.ico',
+    '/manifest.webmanifest',
+    '/logo192.png',
+    '/logo512.png',
+    '/masked_logo192.png',
+    '/masked_logo512.png',
 
 ]
 
@@ -26,8 +27,6 @@ self.addEventListener('fetch', async event => {
     const url = new URL(req.url);
     if (url.origin === location.origin) {
         event.respondWith(cacheFirst(req));
-    } else {
-        event.respondWith(networkAndCache(req));
     }
 });
 

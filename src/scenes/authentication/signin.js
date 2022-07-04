@@ -1,3 +1,4 @@
+import * as React from "react"
 import { TextField, Button, Typography, Grid, Card } from "@mui/material"
 import { LoadingButton } from '@mui/lab'
 import { Link as LinkRoute } from "react-router-dom"
@@ -20,7 +21,9 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
 
 
-
+    React.useEffect(() => {
+        localStorage.clear()
+    }, [])
 
     const submit = async () => {
 

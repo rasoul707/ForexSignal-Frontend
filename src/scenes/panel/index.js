@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AppBar from "../../components/AppBar"
 import BottomNavigationMenu from "../../components/BottomNavigationMenu"
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
@@ -17,9 +18,7 @@ import { useSnackbar } from 'notistack';
 import { wsSignals, wsArticles } from "../../api/socket"
 import * as API from "../../api";
 
-
-
-
+import { haveLicense } from "../../components/LicenseAlert"
 
 const Panel = () => {
 
@@ -29,9 +28,10 @@ const Panel = () => {
 
 
     const user = useSelector(state => state.auth.user)
-    const signalsList = useSelector(state => state.panel)
 
     const dispatch = useDispatch()
+    const audioPlayer = React.useRef(null);
+
 
     useEffect(() => {
         const parsed = queryString.parse(location.search);
@@ -40,63 +40,69 @@ const Panel = () => {
             else localStorage.setItem('ref', parsed.ref)
         }
         if (!user) history.replace("/auth")
-
-        getSignalsAlertList()
-        getArticlesList()
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        setTimeout(async () => {
+            await getSignalsAlertList()
+            await getArticlesList()
+        }, 500)
+    }, [user])
+
     const getSignalsAlertList = async () => {
+
+        if (!user) return
+        if (!user.broker) return
+        if (!haveLicense(user)) return
         try {
             const response = await API.GET(true)('notice/signal/?broker=' + user.broker)
             dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
-
-            wsSignals().onmessage = function (event) {
-                const data = JSON.parse(event.data);
-                const m = {
-                    broker: { id: 1, name: "Alpary", logo: 1 },
-                    broker_id: 1,
-                    description: "fdgdfgddhfdhfd",
-                    id: 2,
-                    image: null,
-                    image_id: null,
-                    is_active: true,
-                    title: "Test " + Math.random(),
-                }
-
-                dispatch({
-                    type: 'SIGNAL_LIST_ADD',
-                    payload: { signal: m }
-                })
-
-                enqueueSnackbar("New Signal Received", { variant: 'info' })
-            }
-
         } catch (error) {
             enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
         }
+
+
+        wsSignals(user.broker).onmessage = function (event) {
+            const { data } = JSON.parse(event.data);
+            if (!data.id) {
+                dispatch({
+                    type: 'SIGNAL_LIST_ADD',
+                    payload: { signal: data }
+                })
+                enqueueSnackbar("New Signal Received", {
+                    variant: 'info',
+                    action: <Button color="inherit" size="small" onClick={() => { history.push("/") }} children="SHOW" />,
+                })
+                audioPlayer.current.play();
+            }
+        }
+
     }
 
     const getArticlesList = async () => {
-
+        if (!user) return
+        try {
+            const response = await API.GET(true)('post/article/')
+            dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
+            wsArticles().onmessage = function (event) {
+                const { data } = JSON.parse(event.data);
+                if (!data.id) {
+                    // dispatch({
+                    //     type: 'SIGNAL_LIST_ADD',
+                    //     payload: { signal: data }
+                    // })
+                    // enqueueSnackbar("New Article Received", { variant: 'info' })
+                }
+            }
+        } catch (error) {
+            enqueueSnackbar("[getarticles]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
+        }
     }
-
-
-    const wsConnection = () => {
-
-
-        // wsArticles.onmessage = function (event) {
-        //     const json = JSON.parse(event.data);
-        //     enqueueSnackbar(JSON.stringify(json), { variant: 'info' })
-        //     // toggleNotify()
-        // }
-    }
-
 
 
 
     if (!user) return null;
+
     return <Box sx={{ mb: 7 }}>
         <AppBar />
         <Box component="main" sx={{ p: 3, }} >
@@ -109,6 +115,8 @@ const Panel = () => {
             </Switch>
         </Box>
         <BottomNavigationMenu />
+        <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
+
     </Box>
 }
 export default Panel;

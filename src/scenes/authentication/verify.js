@@ -1,21 +1,30 @@
+import * as React from "react"
 import { TextField, Button, Typography, Grid, Card, Alert } from "@mui/material"
 import { useState } from "react";
 import Logo from "../../components/Logo"
-import * as api from "../../api";
-import { useSnackbar } from 'notistack';
+// import * as api from "../../api";
+// import { useSnackbar } from 'notistack';
+import { useHistory, useLocation } from "react-router-dom"
+import queryString from "query-string";
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 
 const Verify = () => {
 
-    const { enqueueSnackbar } = useSnackbar()
+    const history = useHistory()
+    const location = useLocation()
 
-    const [email, setEmail] = useState(localStorage.getItem('Verify_EmailAddress'));
+    const [verifyStatus, setVerifyStatus] = React.useState('FailedVerify')
+
+    const [email, setEmail] = useState(localStorage.getItem('VERIFICATIONEMAILADDRESS'));
 
     const [canChangeEmail, setCanChangeEmail] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const sendAgain = () => {
+
+    const sendEmail = () => {
 
     }
 
@@ -24,14 +33,59 @@ const Verify = () => {
         setLoading(true)
         setCanChangeEmail(false)
 
-
-
+        const oldEmail = localStorage.getItem('VERIFICATIONEMAILADDRESS')
+        const newEmail = email
 
     }
 
+    React.useEffect(() => {
+        const data = async () => {
+            if (!localStorage.getItem('VERIFICATIONEMAILADDRESS')) {
+                history.replace("/")
+            }
+
+            const parsed = queryString.parse(location.search);
+            if (parsed.key) {
+                // send request to api
+                // await API.POST(false)('auth/register/verify-email//', data)
+            }
+            else {
+
+            }
+
+
+            /*
+            await API.POST(false)('auth/register/resend-email/', data)
+            await API.POST(false)('auth/register/verify-email//', data)
+    
+            */
+        }
 
 
 
+    }, [])
+
+
+    if (verifyStatus === 'SuccessVerify') {
+        return (
+            <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
+                <Grid container direction="column">
+                    <CheckOutlinedIcon color='success' sx={{ textAlign: "center", width: "100%", mb: 2, mt: 2, fontSize: 100 }} />
+                    <Typography align="center" variant="body1" style={{ color: "#4e4e4e" }}>Your email verified successfully</Typography>
+                </Grid>
+            </Card>
+        )
+    }
+    if (verifyStatus === 'FailedVerify') {
+        return (
+            <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
+                <Grid container direction="column">
+                    <CloseOutlinedIcon color='error' sx={{ textAlign: "center", width: "100%", mb: 2, mt: 2, fontSize: 100 }} />
+                    <Typography align="center" variant="body1" style={{ color: "#4e4e4e" }}>Verification Failed<br /> Maybe link is invalid or expired</Typography>
+                </Grid>
+            </Card>
+        )
+    }
 
     return (
         <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
@@ -66,7 +120,7 @@ const Verify = () => {
                     size="small"
                     sx={{ marginTop: (theme) => theme.spacing(2) }}
                     children="Send again"
-                    onClick={sendAgain}
+                    onClick={sendEmail}
                     disabled={disabled}
                     loading={loading}
                 />}

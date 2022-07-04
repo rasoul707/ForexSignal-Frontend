@@ -9,6 +9,7 @@ import * as API from "../../../api";
 import { useSnackbar } from 'notistack';
 
 
+
 const ChooseBroker = () => {
 
     const user = useSelector(state => state.auth.user)
@@ -53,45 +54,43 @@ const ChooseBroker = () => {
 
 
     return <>
-        <Grid container justifyContent="center" >
-            <Grid item lg={6} md={8} sm={10} xs={12}>
-                <Card>
 
-                    <CardContent>
-                        <Typography>
-                            Choose broker:
-                        </Typography>
-                        <FormControl fullWidth sx={{ marginBottom: 2, marginTop: 2 }}>
-                            <InputLabel>Broker</InputLabel>
-                            <Select
-                                label="Broker"
-                                variant='outlined'
+        <Card>
 
-                                value={brokersList.length === 0 ? "none" : broker}
-                                onChange={(e) => { setBroker(e.target.value) }}
-                                disabled={disabled}
-                            >
-                                <MenuItem value="none" disabled><em>None</em></MenuItem>
-                                {brokersList.map(({ id, name, logo }) => <MenuItem value={id}>
-                                    <Grid container alignItems="center" spacing={1}>
-                                        <Grid item><Avatar alt={name} src={logo.thumbnail || "/no-avatar"} sx={{ width: 25, height: 25 }} /></Grid>
-                                        <Grid item>{name}</Grid>
-                                    </Grid>
-                                </MenuItem>)}
-                            </Select>
-                        </FormControl>
-                        <LoadingButton
-                            variant="contained"
-                            size="large"
-                            children="Choose"
-                            onClick={choose}
-                            disabled={disabled}
-                            loading={loading}
-                        />
-                    </CardContent>
-                </Card>
-            </Grid>
-        </Grid>
+            <CardContent>
+                <Typography>
+                    Choose broker:
+                </Typography>
+                <FormControl fullWidth sx={{ marginBottom: 2, marginTop: 2 }}>
+                    <InputLabel>Broker</InputLabel>
+                    <Select
+                        label="Broker"
+                        variant='outlined'
+
+                        value={brokersList.length === 0 ? "none" : broker}
+                        onChange={(e) => { setBroker(e.target.value) }}
+                        disabled={disabled}
+                    >
+                        <MenuItem value="none" disabled><em>None</em></MenuItem>
+                        {brokersList.map(({ id, name, logo }) => <MenuItem value={id}>
+                            <Grid container alignItems="center" spacing={1}>
+                                <Grid item><Avatar alt={name} src={logo.thumbnail || "/no-avatar"} sx={{ width: 25, height: 25 }} /></Grid>
+                                <Grid item>{name}</Grid>
+                            </Grid>
+                        </MenuItem>)}
+                    </Select>
+                </FormControl>
+                <LoadingButton
+                    variant="contained"
+                    size="large"
+                    children="Choose"
+                    onClick={choose}
+                    disabled={disabled}
+                    loading={loading}
+                />
+            </CardContent>
+        </Card>
+
     </>
 
 }

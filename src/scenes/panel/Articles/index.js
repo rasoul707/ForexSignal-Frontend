@@ -1,4 +1,8 @@
+import Layout from "../../../components/Layout"
+
+
+
 const Page = () => {
-    return "Articles"
+    return <Layout>"Articles"</Layout>
 }
 export default Page
