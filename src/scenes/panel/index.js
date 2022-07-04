@@ -103,6 +103,7 @@ const Panel = () => {
 
 
 
+
     if (!user) return null;
 
     return <Box sx={{ mb: 7 }}>
@@ -118,7 +119,6 @@ const Panel = () => {
         </Box>
         <BottomNavigationMenu />
         <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
-
     </Box>
 }
 export default Panel;

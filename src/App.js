@@ -67,11 +67,6 @@ function App() {
     try {
       const response = await API.GET(true)('auth/user/')
       dispatch({ type: 'USER_INFO', payload: { user: response.data } })
-      if (!response.data.is_verified_email) {
-        localStorage.clear()
-        localStorage.setItem('VERIFICATIONEMAILADDRESS', response.data.email)
-        window.location.reload()
-      }
     } catch (error) {
       localStorage.clear()
       window.location.reload()
