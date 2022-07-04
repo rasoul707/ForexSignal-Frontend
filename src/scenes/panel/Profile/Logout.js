@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Card, Button, CardContent, Dialog, Slide, DialogTitle, DialogContent, DialogActions, Typography } from '@mui/material';
 import * as API from "../../../api";
-
+import { useHistory } from "react-router-dom"
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -14,12 +14,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const LogoutDialog = ({ open, handleClose, }) => {
 
 
+    const history = useHistory()
+
+
 
     const logout = async () => {
         handleClose()
         await API.POST(true)('auth/logout/')
         localStorage.clear()
-        window.location.reload()
+        history.replace('/auth/signin/')
     }
 
 
