@@ -1,7 +1,7 @@
 
 
 
-export const APIBaseUrl = 'http://195.248.242.210:8000/api/';
-export const WSBaseUrl = 'ws://195.248.242.210:8000/ws/';
+export const APIBaseUrl = 'https://therealrole.com:2053/api/';
+export const WSBaseUrl = 'wss://therealrole.com:2053/ws/';
 
 
