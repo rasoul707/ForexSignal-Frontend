@@ -1,7 +1,7 @@
 import * as React from "react"
 import { TextField, Button, Typography, Grid, Card } from "@mui/material"
 import { LoadingButton } from '@mui/lab'
-import { Link as LinkRoute, useHistory } from "react-router-dom"
+import { Link as LinkRoute } from "react-router-dom"
 import { useState } from "react";
 import Logo from "../../components/Logo"
 import * as API from "../../api";
@@ -12,7 +12,7 @@ import validex from 'validex'
 const SignIn = () => {
 
     const { enqueueSnackbar } = useSnackbar()
-    const history = useHistory()
+
 
     const [disabled, setDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -64,7 +64,7 @@ const SignIn = () => {
             enqueueSnackbar("Welcome :) Please wait...", { variant: 'success' })
 
             setTimeout(() => {
-                history.push("/")
+                window.location.reload();
             }, 1000)
 
         } catch (error) {

@@ -47,9 +47,16 @@ const Panel = () => {
     useEffect(() => {
         setTimeout(async () => {
             await getSignalsAlertList()
+        }, 500)
+    }, [user?.broker])
+
+
+    useEffect(() => {
+        setTimeout(async () => {
             await getArticlesList()
         }, 500)
-    }, [user])
+    }, [])
+
 
     const getSignalsAlertList = async () => {
 
