@@ -10,12 +10,12 @@ import queryString from "query-string";
 
 
 import Home from "./Home"
-import Articles from "./Articles"
+import News from "./News"
 import Help from "./Help"
 import Profile from "./Profile"
 import { useSnackbar } from 'notistack';
 
-import { wsSignals, wsArticles } from "../../api/socket"
+import { wsSignals, wsNews } from "../../api/socket"
 import * as API from "../../api";
 
 import { haveLicense } from "../../components/LicenseAlert"
@@ -53,7 +53,7 @@ const Panel = () => {
 
     useEffect(() => {
         setTimeout(async () => {
-            await getArticlesList()
+            await getNewsList()
         }, 500)
     }, [])
 
@@ -88,12 +88,12 @@ const Panel = () => {
 
     }
 
-    const getArticlesList = async () => {
+    const getNewsList = async () => {
         if (!user) return
         try {
-            const response = await API.GET(true)('post/article/')
+            const response = await API.GET(true)('news/news/')
             dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
-            wsArticles().onmessage = function (event) {
+            wsNews().onmessage = function (event) {
                 const { data } = JSON.parse(event.data);
                 if (!data.id) {
                     // dispatch({
@@ -104,7 +104,7 @@ const Panel = () => {
                 }
             }
         } catch (error) {
-            enqueueSnackbar("[getarticles]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
+            enqueueSnackbar("[getnews]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
         }
     }
 
@@ -117,7 +117,7 @@ const Panel = () => {
         <AppBar />
         <Box component="main" sx={{ p: 3, }} >
             <Switch>
-                <Route path="/articles" component={Articles} />
+                <Route path="/news" component={News} />
                 <Route path="/help" component={Help} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/" component={Home} />

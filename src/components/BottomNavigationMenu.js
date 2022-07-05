@@ -27,8 +27,8 @@ const BottomNavigationMenu = () => {
                 />
                 {/* articles */}
                 <BottomNavigationAction
-                    label="Articles"
-                    value="articles"
+                    label="News"
+                    value="news"
                     icon={<ArticleTwoToneIcon />}
                 />
                 {/* ticket & learning */}
