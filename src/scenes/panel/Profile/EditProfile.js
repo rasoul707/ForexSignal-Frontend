@@ -101,7 +101,6 @@ const EditProfile = ({ setDisabled, setLoading, disabled, loading }) => {
 
 
         </CardContent>
-
     </Card>
 }
 

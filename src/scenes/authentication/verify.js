@@ -69,7 +69,7 @@ const Verify = () => {
 
     if (verifyStatus === 'SuccessVerify') {
         return (
-            <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
+            <Card sx={{ maxWidth: 300, padding: 7, margin: "50px auto" }}>
                 <Grid container direction="column">
                     <CheckOutlinedIcon color='success' sx={{ textAlign: "center", width: "100%", mb: 2, mt: 2, fontSize: 100 }} />
                     <Typography align="center" variant="body1" style={{ color: "#4e4e4e" }}>Your email verified successfully</Typography>
@@ -79,7 +79,7 @@ const Verify = () => {
     }
     if (verifyStatus === 'FailedVerify') {
         return (
-            <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
+            <Card sx={{ maxWidth: 300, padding: 7, margin: "50px auto" }}>
                 <Grid container direction="column">
                     <CloseOutlinedIcon color='error' sx={{ textAlign: "center", width: "100%", mb: 2, mt: 2, fontSize: 100 }} />
                     <Typography align="center" variant="body1" style={{ color: "#4e4e4e" }}>Verification Failed<br /> Maybe link is invalid or expired</Typography>
@@ -89,7 +89,7 @@ const Verify = () => {
     }
 
     return (
-        <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
+        <Card sx={{ maxWidth: 300, padding: 7, margin: "50px auto" }}>
             <Grid container direction="column">
                 <Logo />
                 <Typography align="center" variant="h6" style={{ color: "#4e4e4e" }}>Verification</Typography>

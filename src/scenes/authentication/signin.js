@@ -76,7 +76,7 @@ const SignIn = () => {
     }
 
     return (
-        <Card sx={{ width: 300, padding: 7, margin: "50px auto" }}>
+        <Card sx={{ maxWidth: 300, padding: 7, margin: "50px auto" }}>
             <Grid container direction="column">
                 <Logo />
                 <Typography align="center" variant="h6" style={{ color: "#4e4e4e" }}>Sign in</Typography>
