@@ -9,6 +9,52 @@ import moment from "moment"
 
 
 
+
+const SignalsList = () => {
+    const [, setRefreshTime] = React.useState([true])
+    const signalsList = useSelector(state => state.panel.signalsList)
+
+
+    React.useEffect(() => {
+        setInterval(() => {
+            setRefreshTime([true])
+        }, 60000)
+    }, [])
+
+
+    if (!signalsList) return null
+    if (signalsList.length === 0) return <>
+        <Alert severity='error'>
+            <Typography>
+                No Signal Found yet
+            </Typography>
+        </Alert>
+    </>
+
+    return <List sx={{ bgcolor: 'background.paper' }} key={-95}>
+        <TransitionGroup >
+            {signalsList.map((data, index) => (
+                <Collapse key={index} >
+                    <SignalItem {...data} isLast={index + 1 < signalsList.length} />
+                </Collapse>
+            ))}
+        </TransitionGroup>
+
+    </List>
+
+
+
+}
+
+
+export default SignalsList
+
+
+
+
+
+
+
 const SignalItem = ({ title, description, broker, created_datetime, isLast }) => {
     return <ListItem
         alignItems="flex-start"
@@ -55,41 +101,3 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
         </Grid>
     </ListItem>
 }
-
-const SignalsList = () => {
-    const [, setRefreshTime] = React.useState([true])
-    const signalsList = useSelector(state => state.panel.signalsList)
-
-
-    React.useEffect(() => {
-        setInterval(() => {
-            setRefreshTime([true])
-        }, 60000)
-    }, [])
-
-
-    if (!signalsList) return null
-    if (signalsList.length === 0) return <>
-        <Alert severity='error'>
-            <Typography>
-                No Signal Found yet
-            </Typography>
-        </Alert>
-    </>
-
-    return <List sx={{ bgcolor: 'background.paper' }} key={-95}>
-        <TransitionGroup >
-            {signalsList.map((data, index) => (
-                <Collapse key={index} >
-                    <SignalItem {...data} isLast={index + 1 < signalsList.length} />
-                </Collapse>
-            ))}
-        </TransitionGroup>
-    </List>
-
-
-
-}
-
-
-export default SignalsList

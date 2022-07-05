@@ -38,7 +38,7 @@ export const appReducer = (state = appInitial, action) => {
 
 const panelInitial = {
     signalsList: null,
-    articles: null,
+    newsList: null,
     licenseOk: false,
 }
 
@@ -57,10 +57,18 @@ export const panelReducer = (state = panelInitial, action) => {
                 ...state,
                 signalsList: [action.payload.signal, ...state.signalsList]
             }
-        case 'ARTICLE_LIST':
+        case 'NEWS_LIST':
             return {
                 ...state,
-                articles: action.payload.articles
+                newsList: action.payload.newsList
+            }
+        case 'NEWS_LIST_ADD':
+            if (!action.payload.news.id) {
+                action.payload.news.created_datetime = moment().toISOString()
+            }
+            return {
+                ...state,
+                newsList: [action.payload.news, ...state.newsList]
             }
         case 'LICENSE_OK':
             return {

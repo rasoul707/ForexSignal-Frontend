@@ -11,11 +11,12 @@ import queryString from "query-string";
 
 import Home from "./Home"
 import News from "./News"
+import NewsSingle from "./News/single"
 import Help from "./Help"
 import Profile from "./Profile"
 import { useSnackbar } from 'notistack';
 
-import { wsSignals, wsNews } from "../../api/socket"
+import { wsSignals, } from "../../api/socket"
 import * as API from "../../api";
 
 import { haveLicense } from "../../components/LicenseAlert"
@@ -51,11 +52,7 @@ const Panel = () => {
     }, [user?.broker])
 
 
-    useEffect(() => {
-        setTimeout(async () => {
-            await getNewsList()
-        }, 500)
-    }, [])
+
 
 
     const getSignalsAlertList = async () => {
@@ -64,7 +61,7 @@ const Panel = () => {
         if (!user.broker) return
         if (!haveLicense(user)) return
         try {
-            const response = await API.GET(true)('notice/signal/?broker=' + user.broker)
+            const response = await API.GET(true)('notice/signal/?broker=' + user.broker + '&per=100')
             dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
         } catch (error) {
             enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
@@ -88,25 +85,7 @@ const Panel = () => {
 
     }
 
-    const getNewsList = async () => {
-        if (!user) return
-        try {
-            const response = await API.GET(true)('news/news/')
-            dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
-            wsNews().onmessage = function (event) {
-                const { data } = JSON.parse(event.data);
-                if (!data.id) {
-                    // dispatch({
-                    //     type: 'SIGNAL_LIST_ADD',
-                    //     payload: { signal: data }
-                    // })
-                    // enqueueSnackbar("New Article Received", { variant: 'info' })
-                }
-            }
-        } catch (error) {
-            enqueueSnackbar("[getnews]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
-        }
-    }
+
 
 
 
@@ -117,7 +96,9 @@ const Panel = () => {
         <AppBar />
         <Box component="main" sx={{ p: 3, }} >
             <Switch>
+                <Route path="/news/:news_id" component={NewsSingle} />
                 <Route path="/news" component={News} />
+
                 <Route path="/help" component={Help} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/" component={Home} />
