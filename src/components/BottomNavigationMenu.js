@@ -1,11 +1,10 @@
 import { useLocation, useHistory } from "react-router-dom";
 
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
-import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
-import ArticleTwoToneIcon from '@mui/icons-material/ArticleTwoTone';
-import HelpTwoToneIcon from '@mui/icons-material/HelpTwoTone';
-import PermIdentityTwoToneIcon from '@mui/icons-material/PermIdentityTwoTone';
-
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
+import ContactSupportRoundedIcon from '@mui/icons-material/ContactSupportRounded';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 const BottomNavigationMenu = () => {
 
     const location = useLocation()
@@ -15,7 +14,7 @@ const BottomNavigationMenu = () => {
     return <>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
             <BottomNavigation
-                showLabels={false}
+                showLabels={true}
                 value={location.pathname.split("/")[1]}
                 onChange={(event, newValue) => history.push("/" + newValue)}
             >
@@ -23,25 +22,25 @@ const BottomNavigationMenu = () => {
                 <BottomNavigationAction
                     label="Home"
                     value=""
-                    icon={<HomeTwoToneIcon />}
+                    icon={<HomeRoundedIcon />}
                 />
                 {/* articles */}
                 <BottomNavigationAction
                     label="News"
                     value="news"
-                    icon={<ArticleTwoToneIcon />}
+                    icon={<ArticleRoundedIcon />}
                 />
                 {/* ticket & learning */}
                 <BottomNavigationAction
                     label="Help"
                     value="help"
-                    icon={<HelpTwoToneIcon />}
+                    icon={<ContactSupportRoundedIcon />}
                 />
                 {/* user edit .... */}
                 <BottomNavigationAction
                     label="Profile"
                     value="profile"
-                    icon={<PermIdentityTwoToneIcon />}
+                    icon={<AccountCircleRoundedIcon />}
                 />
 
             </BottomNavigation>
