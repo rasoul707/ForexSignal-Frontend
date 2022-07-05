@@ -12,39 +12,44 @@ import moment from "moment"
 const SignalItem = ({ title, description, broker, created_datetime, isLast }) => {
     return <ListItem
         alignItems="flex-start"
-        secondaryAction={
-            <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-                children={moment(created_datetime).fromNow()}
-            />
-        }
         divider={isLast}
+        sx={{ pr: 2, overflow: 'hidden' }}
     >
-        <Grid >
-            <Grid>
-                <ListItemText
-                    primary={title}
-                    secondary={description}
-                />
-            </Grid>
-            <Grid>
+        <Grid container flexDirection="row" alignItems="center">
 
-                <ListItemText
-                    secondary={
-                        <React.Fragment>
-                            <Typography
-                                sx={{ display: 'inline' }}
-                                component="span"
-                                variant="body2"
-                                color="text.primary"
-                                children={broker.name}
-                            />
-                            {" — Only 2.5% of the budget"}
-                        </React.Fragment>
-                    }
+            <Grid container flexDirection="column" xs zeroMinWidth>
+                <Grid item>
+                    <ListItemText
+                        primary={title}
+                        secondary={description}
+                        secondaryTypographyProps={{ sx: { overflowWrap: "anywhere" } }}
+                    />
+                </Grid>
+                <Grid item>
+                    <ListItemText
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    sx={{ display: 'inline' }}
+                                    component="span"
+                                    variant="body2"
+                                    color="text.primary"
+                                    children={broker.name}
+                                />
+                                {" — Only 2.5% of the budget"}
+                            </React.Fragment>
+                        }
+                    />
+                </Grid>
+            </Grid>
+
+            <Grid item xs="auto">
+                <Typography
+                    sx={{ display: 'inline', pl: 1 }}
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                    children={moment(created_datetime).fromNow()}
                 />
             </Grid>
         </Grid>
