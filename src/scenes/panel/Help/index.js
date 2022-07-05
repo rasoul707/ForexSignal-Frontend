@@ -1,5 +1,5 @@
 import Layout from "../../../components/Layout"
-import { Grid, List, ListItem, ListItemButton, Typography, Alert, Skeleton, Avatar, } from '@mui/material';
+import { Grid, } from '@mui/material';
 import NewTicket from "./NewTicket"
 import TicketsList from "./TicketsList"
 
