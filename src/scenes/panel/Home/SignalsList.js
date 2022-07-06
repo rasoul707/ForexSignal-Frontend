@@ -5,8 +5,6 @@ import { Grid, List, ListItem, ListItemText, Typography, Alert, Collapse } from 
 import { TransitionGroup } from 'react-transition-group';
 
 import moment from "moment"
-import StoreIcon from '@mui/icons-material/Store';
-import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
 
 const SignalsList = () => {
