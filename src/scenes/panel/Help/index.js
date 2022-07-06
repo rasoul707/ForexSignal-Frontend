@@ -14,11 +14,11 @@ const Page = () => {
             Will update ...
 
             <Grid item xs={12}>
-                {/* <TicketsList /> */}
+                <TicketsList />
             </Grid>
 
             <Grid item xs={12}>
-                {/* <NewTicket /> */}
+                <NewTicket />
             </Grid>
 
         </Grid>

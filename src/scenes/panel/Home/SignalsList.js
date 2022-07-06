@@ -28,7 +28,7 @@ const SignalsList = () => {
         </Alert>
     </>
 
-    return <List sx={{ bgcolor: 'background.paper' }} key={-95}>
+    return <List sx={{ bgcolor: 'background.paper', p: 0 }} key={-95}>
         <TransitionGroup >
             {signalsList.map((data, index) => (
                 <Collapse key={index} >
