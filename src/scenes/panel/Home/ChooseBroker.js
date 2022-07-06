@@ -74,7 +74,7 @@ const ChooseBroker = () => {
                         <MenuItem value="none" disabled><em>None</em></MenuItem>
                         {brokersList.map(({ id, name, logo }) => <MenuItem value={id}>
                             <Grid container alignItems="center" spacing={1}>
-                                <Grid item><Avatar alt={name} src={logo.thumbnail || "/no-avatar"} sx={{ width: 25, height: 25 }} /></Grid>
+                                <Grid item><Avatar alt={name} src={logo?.thumbnail || "/no-avatar"} sx={{ width: 25, height: 25 }} /></Grid>
                                 <Grid item>{name}</Grid>
                             </Grid>
                         </MenuItem>)}

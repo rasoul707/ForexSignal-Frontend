@@ -31,27 +31,27 @@ const License = () => {
     }
     else {
         _content = [
-            <Typography variant='subtitle2' sx={{ mb: 1 }}>
+            <Typography variant='subtitle2' sx={{ mb: 1 }} key={0}>
                 License: {license?.title}
             </Typography>
         ]
 
         if (license.unlimited) {
             _content.push(
-                <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                <Typography variant='subtitle2' sx={{ mb: 1 }} key={1}>
                     Unlimited
                 </Typography>
             )
         } else {
             if (expiration <= 0) {
                 _content.push(
-                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                    <Typography variant='subtitle2' sx={{ mb: 1 }} key={1}>
                         License expired: {dateExpiration} ({fromNow})
                     </Typography>
                 )
             } else {
                 _content.push(
-                    <Typography variant='subtitle2' sx={{ mb: 1 }}>
+                    <Typography variant='subtitle2' sx={{ mb: 1 }} key={1}>
                         License deadline: {dateExpiration} ({fromNow})
                     </Typography>
                 )
