@@ -1,7 +1,7 @@
 {
-  "id": "fxsignal",
-  "short_name": "Forex Signal System",
-  "name": "Forex Signal System",
+  "id": "tradersignal",
+  "short_name": "Trader Signal",
+  "name": "Trader Signal",
   "description": "Send signals of brokers to app",
   "icons": [
     {
@@ -34,7 +34,7 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#ff5e34",
+  "theme_color": "#482880",
   "orientation": "portrait",
   "scope": ".",
   "background_color": "#ffffff",

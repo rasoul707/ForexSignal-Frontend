@@ -1,7 +1,9 @@
 const cacheName = "cache-v5";
 const staticAssets = [
     '/',
-    '/bundle.js',
+    '/static/js/bundle.js',
+    '/static/js/vendors~main.chunk.js',
+    '/static/js/main.chunk.js',
     '/index.html',
     '/favicon.ico',
     '/manifest.webmanifest',
