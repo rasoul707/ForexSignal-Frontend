@@ -5,9 +5,8 @@ import { Grid, List, ListItem, ListItemText, Typography, Alert, Collapse } from 
 import { TransitionGroup } from 'react-transition-group';
 
 import moment from "moment"
-
-
-
+import StoreIcon from '@mui/icons-material/Store';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
 
 const SignalsList = () => {
@@ -56,10 +55,31 @@ export default SignalsList
 
 
 const SignalItem = ({ title, description, broker, created_datetime, isLast }) => {
+    let direction
+    let timeFrame
+    let backgroundColor
+    const detail = description.split(",")
+    if (detail.length !== 2) {
+        direction = null
+        timeFrame = '~'
+        backgroundColor = '#FFF'
+    }
+    else {
+        direction = detail[0]
+        timeFrame = detail[1]
+        if (direction === 'Buy') {
+            backgroundColor = 'rgb(12 143 19 / 62%)'
+        } else {
+            backgroundColor = 'rgb(185 15 15 / 62%)'
+        }
+    }
+
+
+
     return <ListItem
         alignItems="flex-start"
         divider={isLast}
-        sx={{ pr: 2, overflow: 'hidden' }}
+        sx={{ pr: 2, overflow: 'hidden', backgroundColor }}
     >
         <Grid container flexDirection="row" alignItems="center">
 
@@ -67,7 +87,7 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
                 <Grid item>
                     <ListItemText
                         primary={title}
-                        secondary={description}
+                        secondary={timeFrame + ' - ' + direction}
                         secondaryTypographyProps={{ sx: { overflowWrap: "anywhere" } }}
                     />
                 </Grid>
