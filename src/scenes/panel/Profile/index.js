@@ -10,7 +10,7 @@ import EditProfile from './EditProfile';
 import Referral from './Referral';
 import License from './License';
 import Logout from './Logout';
-
+import ChooseBroker from '../Home/ChooseBroker';
 
 
 
@@ -29,6 +29,10 @@ const Page = () => {
         >
             <Grid item xs={12}>
                 <EditProfile {...{ disabled, loading, setDisabled, setLoading }} />
+            </Grid>
+
+            <Grid item xs={12}>
+                <ChooseBroker />
             </Grid>
 
             <Grid item xs={12}>
