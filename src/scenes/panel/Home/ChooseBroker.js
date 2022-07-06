@@ -71,8 +71,8 @@ const ChooseBroker = () => {
                         onChange={(e) => { setBroker(e.target.value) }}
                         disabled={disabled}
                     >
-                        <MenuItem value="none" disabled><em>None</em></MenuItem>
-                        {brokersList.map(({ id, name, logo }) => <MenuItem value={id}>
+                        <MenuItem value="none" disabled key={-1}><em>None</em></MenuItem>
+                        {brokersList.map(({ id, name, logo }) => <MenuItem value={id} key={id}>
                             <Grid container alignItems="center" spacing={1}>
                                 <Grid item><Avatar alt={name} src={logo?.thumbnail || "/no-avatar"} sx={{ width: 25, height: 25 }} /></Grid>
                                 <Grid item>{name}</Grid>
