@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 const LicensePlanItem = ({ id, title, price, duration, unlimited, buy }) => {
-    return <Grid key={id} item md={6} xs={12}>
+    return <Grid item md={6} xs={12}>
         <Card sx={{ backgroundColor: "#ff9800", height: '100%', minWidth: 200 }} >
             <CardActionArea sx={{ height: '100%', }} onClick={() => buy(id)}>
                 <Grid container sx={{ height: '100%', }} justifyContent="space-between" flexDirection="column" >
@@ -64,7 +64,7 @@ const LicensesDialog = ({ open, handleClose, }) => {
 
     const buy = (planID) => {
         handleClose()
-        history.push("/help/license/" + planID)
+        history.push("/help?license=" + planID)
     }
 
 
@@ -78,7 +78,7 @@ const LicensesDialog = ({ open, handleClose, }) => {
         <DialogTitle>Choose plan</DialogTitle>
         <DialogContent>
             <Grid container spacing={2} alignItems="stretch" justifyContent="center">
-                {licenseList.map((data, index) => <LicensePlanItem  {...data} buy={buy} />)}
+                {licenseList.map((data, index) => <LicensePlanItem key={index} {...data} buy={buy} />)}
             </Grid>
         </DialogContent>
         <DialogActions>
