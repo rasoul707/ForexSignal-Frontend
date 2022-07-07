@@ -20,6 +20,8 @@ import { wsSignals, } from "../../api/socket"
 import * as API from "../../api";
 
 import { haveLicense } from "../../components/LicenseAlert"
+import Chat from "../chat"
+
 
 const Panel = () => {
 
@@ -107,6 +109,7 @@ const Panel = () => {
         </Box>
         <BottomNavigationMenu />
         <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
+        <Chat />
     </Box>
 }
 export default Panel;
