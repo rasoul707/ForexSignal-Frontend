@@ -8,14 +8,14 @@ import moment from "moment"
 
 
 const SignalsList = () => {
-    // const [, setRefreshTime] = React.useState([true])
+    const [, setRefreshTime] = React.useState([true])
     const signalsList = useSelector(state => state.panel.signalsList)
 
 
     React.useEffect(() => {
-        // setInterval(() => {
-        //     setRefreshTime([true])
-        // }, 60000)
+        setInterval(() => {
+            setRefreshTime([true])
+        }, 60000)
     }, [])
 
 

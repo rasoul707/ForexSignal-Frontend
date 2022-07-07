@@ -18,7 +18,7 @@ import PaginationNav from "../../../components/Pagination"
 
 const Page = () => {
 
-    // const [, setRefreshTime] = React.useState([true])
+    const [, setRefreshTime] = React.useState([true])
 
 
 
@@ -31,9 +31,9 @@ const Page = () => {
 
     const MAX_PER_PAGE = 5
     React.useEffect(() => {
-        // setInterval(() => {
-        //     setRefreshTime([true])
-        // }, 60000)
+        setInterval(() => {
+            setRefreshTime([true])
+        }, 60000)
         getNewsList()
     }, [])
 
