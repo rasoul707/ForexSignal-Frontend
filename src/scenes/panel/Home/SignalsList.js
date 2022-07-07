@@ -67,10 +67,29 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
         direction = detail[0]
         timeFrame = detail[1]
         detailContent = [
-            <Grid item key={1}>{timeFrame}</Grid>,
-            <Grid item key={2} sx={{ pl: 1, pr: 1 }}> ~ </Grid>,
+            <Grid item key={1}>
+                <Typography
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                    children={timeFrame}
+                />
+            </Grid>,
+            <Grid item key={2} sx={{ pl: 1, pr: 1 }}>
+                <Typography
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                    children="~"
+                />
+            </Grid>,
             <Grid item key={3}>
-                {direction}
+                <Typography
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                    children={direction}
+                />
             </Grid>,
             <Grid item key={4}>
                 {direction === 'Buy' && <ArrowUpwardRoundedIcon htmlColor='green' />}
@@ -93,9 +112,10 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
                 <Grid item>
                     <ListItemText
                         primary={title}
-                        secondary={<Grid container>{detailContent}</Grid>}
-                        secondaryTypographyProps={{ sx: { overflowWrap: "anywhere" } }}
                     />
+                </Grid>
+                <Grid item>
+                    <Grid container>{detailContent}</Grid>
                 </Grid>
                 <Grid item>
                     <ListItemText
