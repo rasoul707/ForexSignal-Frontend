@@ -18,7 +18,7 @@ import PaginationNav from "../../../components/Pagination"
 
 const Page = () => {
 
-    const [, setRefreshTime] = React.useState([true])
+    // const [, setRefreshTime] = React.useState([true])
 
 
 
@@ -31,9 +31,9 @@ const Page = () => {
 
     const MAX_PER_PAGE = 5
     React.useEffect(() => {
-        setInterval(() => {
-            setRefreshTime([true])
-        }, 60000)
+        // setInterval(() => {
+        //     setRefreshTime([true])
+        // }, 60000)
         getNewsList()
     }, [])
 
@@ -51,9 +51,9 @@ const Page = () => {
 
     if (!newsList) return <Layout>
         <List sx={{ p: 0 }} key={-95}>
-            <NewsItem isLoading />
-            <NewsItem isLoading />
-            <NewsItem isLoading />
+            <NewsItem isLoading key={"retR4531"} />
+            <NewsItem isLoading key={"retR4580"} />
+            <NewsItem isLoading key={"retR4598"} />
         </List>
     </Layout>
     if (newsList.length === 0) return <Layout>
@@ -67,7 +67,7 @@ const Page = () => {
     return <Layout>
         <List sx={{ p: 0 }} key={-95}>
             {newsList.map((data, index) => (
-                <NewsItem {...data} isLast={index + 1 < newsList.length} />
+                <NewsItem {...data} isLast={index + 1 < newsList.length} key={data.id} />
             ))}
         </List>
 
@@ -122,9 +122,9 @@ const NewsItem = ({ id, title, excerpt, image, created_datetime, isLoading }) =>
                                 {isLoading
                                     ?
                                     [
-                                        <Skeleton animation="wave" variant='text' />,
-                                        <Skeleton animation="wave" variant='text' />,
-                                        <Skeleton animation="wave" variant='text' />,
+                                        <Skeleton animation="wave" variant='text' key={0} />,
+                                        <Skeleton animation="wave" variant='text' key={1} />,
+                                        <Skeleton animation="wave" variant='text' key={2} />,
                                     ]
                                     :
                                     excerpt

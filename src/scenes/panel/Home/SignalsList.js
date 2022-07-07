@@ -8,14 +8,14 @@ import moment from "moment"
 
 
 const SignalsList = () => {
-    const [, setRefreshTime] = React.useState([true])
+    // const [, setRefreshTime] = React.useState([true])
     const signalsList = useSelector(state => state.panel.signalsList)
 
 
     React.useEffect(() => {
-        setInterval(() => {
-            setRefreshTime([true])
-        }, 60000)
+        // setInterval(() => {
+        //     setRefreshTime([true])
+        // }, 60000)
     }, [])
 
 
@@ -81,7 +81,7 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
     >
         <Grid container flexDirection="row" alignItems="center">
 
-            <Grid container flexDirection="column" xs zeroMinWidth>
+            <Grid container item flexDirection="column" xs zeroMinWidth>
                 <Grid item>
                     <ListItemText
                         primary={title}
