@@ -4,7 +4,7 @@ import Layout from "../../../components/Layout"
 import { Grid, } from '@mui/material';
 import NewTicket from "./NewTicket"
 import TicketsList from "./TicketsList"
-
+import { LiveChatWidget, EventHandlerPayload } from "@livechat/widget-react";
 
 const Page = () => {
 
@@ -23,6 +23,12 @@ const Page = () => {
         crisp()
     })
 
-    return <Layout ref={layout} />
+    return <Layout >
+        <LiveChatWidget
+            license="14293815"
+            visibility="maximized"
+        // onNewEvent={handleNewEvent}
+        />
+    </Layout>
 }
 export default Page
