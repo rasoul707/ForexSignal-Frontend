@@ -68,12 +68,11 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
         timeFrame = detail[1]
         detailContent = [
             <Grid item key={1}>{timeFrame}</Grid>,
-            <Grid item key={2}> ~ </Grid>,
+            <Grid item key={2} sx={{ pl: 1, pr: 1 }}> ~ </Grid>,
             <Grid item key={3}>
                 {direction}
                 {direction === 'Buy' && <ArrowUpwardRoundedIcon htmlColor='green' />}
                 {direction === 'Sell' && <ArrowDownwardRoundedIcon htmlColor='red' />}
-
             </Grid>,
         ]
 
