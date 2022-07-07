@@ -1,4 +1,4 @@
-const cacheName = "cache-v6";
+const cacheName = "cache-v10";
 const staticAssets = [
     '/',
     '/static/js/bundle.js',
