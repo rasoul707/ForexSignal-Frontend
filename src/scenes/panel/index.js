@@ -96,12 +96,12 @@ const Panel = () => {
         <AppBar />
         <Box component="main" sx={{ p: 3, }} >
             <Switch>
-                <Route path="/news/:news_id" component={NewsSingle} />
-                <Route path="/news" component={News} />
+                <Route path="/news/:news_id" exact component={NewsSingle} />
+                <Route path="/news" exact component={News} />
 
-                <Route path="/help" component={Help} />
-                <Route path="/profile" component={Profile} />
-                <Route path="/" component={Home} />
+                <Route path="/help" exact component={Help} />
+                <Route path="/profile" exact component={Profile} />
+                <Route path="/" exact component={Home} />
                 <Redirect to="/" />
             </Switch>
         </Box>
