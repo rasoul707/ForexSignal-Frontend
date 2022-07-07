@@ -1,3 +1,5 @@
+import * as React from "react"
+
 import Layout from "../../../components/Layout"
 import { Grid, } from '@mui/material';
 import NewTicket from "./NewTicket"
@@ -5,23 +7,18 @@ import TicketsList from "./TicketsList"
 
 
 const Page = () => {
-    return <Layout>
-        <Grid
-            container
-            spacing={2}
-        >
 
-            Will update ...
+    const layout = React.useRef(null)
 
-            <Grid item xs={12}>
-                <TicketsList />
-            </Grid>
+    const crisp = () => {
 
-            <Grid item xs={12}>
-                <NewTicket />
-            </Grid>
 
-        </Grid>
-    </Layout>
+    }
+
+    React.useEffect(() => {
+        crisp()
+    })
+
+    return <Layout ref={layout} />
 }
 export default Page
