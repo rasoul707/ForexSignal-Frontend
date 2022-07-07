@@ -10,7 +10,7 @@ import { useHistory, useParams } from "react-router-dom";
 import moment from "moment"
 
 
-const Signle = () => {
+const Single = () => {
 
     const params = useParams()
     const history = useHistory()
@@ -44,7 +44,6 @@ const Signle = () => {
 
     return <Layout>
         <Paper
-            alignItems="flex-start"
             sx={{ p: 2, overflow: 'hidden', mb: 2 }}
         >
 
@@ -82,7 +81,7 @@ const Signle = () => {
 }
 
 
-export default Signle
+export default Single
 
 
 
