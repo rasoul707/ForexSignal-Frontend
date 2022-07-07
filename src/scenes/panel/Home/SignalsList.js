@@ -3,7 +3,8 @@ import { useSelector, } from "react-redux";
 
 import { Grid, List, ListItem, ListItemText, Typography, Alert, Collapse } from '@mui/material';
 import { TransitionGroup } from 'react-transition-group';
-
+import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
+import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
 import moment from "moment"
 
 
@@ -55,21 +56,27 @@ export default SignalsList
 const SignalItem = ({ title, description, broker, created_datetime, isLast }) => {
     let direction
     let timeFrame
-    let backgroundColor
     const detail = description.split(",")
+    let detailContent = null
     if (detail.length !== 2) {
         direction = null
         timeFrame = '~'
-        backgroundColor = '#FFF'
+        detailContent = <Grid item>~</Grid>
     }
     else {
         direction = detail[0]
         timeFrame = detail[1]
-        if (direction === 'Buy') {
-            backgroundColor = 'rgb(12 143 19 / 62%)'
-        } else {
-            backgroundColor = 'rgb(185 15 15 / 62%)'
-        }
+        detailContent = [
+            <Grid item key={1}>{timeFrame}</Grid>,
+            <Grid item key={2}> ~ </Grid>,
+            <Grid item key={3}>
+                {direction}
+                {direction === 'Buy' && <ArrowUpwardRoundedIcon htmlColor='green' />}
+                {direction === 'Sell' && <ArrowDownwardRoundedIcon htmlColor='red' />}
+
+            </Grid>,
+        ]
+
     }
 
 
@@ -77,7 +84,7 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
     return <ListItem
         alignItems="flex-start"
         divider={isLast}
-        sx={{ pr: 2, overflow: 'hidden', backgroundColor }}
+        sx={{ pr: 2, overflow: 'hidden', }}
     >
         <Grid container flexDirection="row" alignItems="center">
 
@@ -85,7 +92,7 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
                 <Grid item>
                     <ListItemText
                         primary={title}
-                        secondary={timeFrame + ' - ' + direction}
+                        secondary={<Grid container>{detailContent}</Grid>}
                         secondaryTypographyProps={{ sx: { overflowWrap: "anywhere" } }}
                     />
                 </Grid>
