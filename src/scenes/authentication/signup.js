@@ -25,7 +25,7 @@ const SignUp = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [acceptTerms, setAcceptTerms] = useState('');
+    const [acceptTerms, setAcceptTerms] = useState(false);
     const [refToken, setRefToken] = useState('');
 
 

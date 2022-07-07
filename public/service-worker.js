@@ -27,9 +27,9 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', async event => {
     const req = event.request;
     const url = new URL(req.url);
-    if (url.origin === location.origin) {
-        event.respondWith(cacheFirst(req));
-    }
+    // if (url.origin === location.origin) {
+    event.respondWith(cacheFirst(req));
+    // }
 });
 
 
