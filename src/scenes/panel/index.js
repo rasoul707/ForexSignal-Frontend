@@ -12,7 +12,7 @@ import queryString from "query-string";
 import Home from "./Home"
 import News from "./News"
 import NewsSingle from "./News/single"
-import Help from "./Help"
+import Support from "./Support"
 import Profile from "./Profile"
 import { useSnackbar } from 'notistack';
 
@@ -20,7 +20,7 @@ import { wsSignals, } from "../../api/socket"
 import * as API from "../../api";
 
 import { haveLicense } from "../../components/LicenseAlert"
-import Chat from "../chat"
+
 
 
 const Panel = () => {
@@ -101,7 +101,7 @@ const Panel = () => {
                 <Route path="/news/:news_id" component={NewsSingle} />
                 <Route path="/news" component={News} />
 
-                <Route path="/help" component={Help} />
+                <Route path="/support" component={Support} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/" component={Home} />
                 <Redirect to="/" />
@@ -109,7 +109,7 @@ const Panel = () => {
         </Box>
         <BottomNavigationMenu />
         <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
-        <Chat />
+
     </Box>
 }
 export default Panel;

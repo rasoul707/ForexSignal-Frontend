@@ -16,7 +16,7 @@ const SignalsList = () => {
     React.useEffect(() => {
         setInterval(() => {
             setRefreshTime([true])
-        }, 60000)
+        }, 5000)
     }, [])
 
 
@@ -105,6 +105,7 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
         alignItems="flex-start"
         divider={isLast}
         sx={{ pr: 2, overflow: 'hidden', }}
+        disabled={moment().diff(moment(created_datetime), 'seconds') > 15}
     >
         <Grid container flexDirection="row" alignItems="center">
 

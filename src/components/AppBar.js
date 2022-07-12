@@ -24,7 +24,7 @@ const ResponsiveAppBar = () => {
                     {/* logo */}
                     <Box sx={{ display: 'flex', flexGrow: 1 }}></Box>
                     <Box sx={{ p: 1, display: 'flex', }} component="a" href="/">
-                        <Logo width="35" />
+                        <Logo width="45" style={{ backgroundColor: "#ffffffc9", borderRadius: "50%" }} />
                     </Box>
                     <Box sx={{ display: 'flex', flexGrow: 1 }}></Box>
                     {/*  logo */}
