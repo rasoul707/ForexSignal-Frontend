@@ -5,13 +5,13 @@
   "description": "Send signals of brokers to app",
   "icons": [
     {
-      "src": "masked_logo192.png",
+      "src": "masked_logo.v2.192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
     },
     {
-      "src": "masked_logo512.png",
+      "src": "masked_logo.v2.512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
@@ -22,12 +22,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logo.v2.192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "logo.v2.512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

@@ -1,4 +1,4 @@
-const cacheName = "cache-v102";
+const cacheName = "cache-v150";
 const staticAssets = [
     '/',
     '/static/js/bundle.js',
@@ -7,10 +7,10 @@ const staticAssets = [
     '/index.html',
     '/favicon.ico',
     '/manifest.webmanifest',
-    '/logo192.png',
-    '/logo512.png',
-    '/masked_logo192.png',
-    '/masked_logo512.png',
+    '/logo.v2.192.png',
+    '/logo.v2.512.png',
+    '/masked_logo.v2.192.png',
+    '/masked_logo.v2.512.png',
 
 ]
 
