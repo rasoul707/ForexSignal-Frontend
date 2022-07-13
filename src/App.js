@@ -90,7 +90,8 @@ function App() {
     else {
       enqueueSnackbar("Check your internet connection",
         {
-          variant: 'error', persist: true,
+          variant: 'error',
+          persist: true,
           anchorOrigin: {
             vertical: 'bottom',
             horizontal: 'center'

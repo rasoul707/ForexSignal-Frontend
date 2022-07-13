@@ -2,7 +2,7 @@
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AppBar from "../../components/AppBar"
 import BottomNavigationMenu from "../../components/BottomNavigationMenu"
-import { Box, Button } from "@mui/material"
+import { Box, } from "@mui/material"
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
@@ -56,8 +56,12 @@ const Panel = () => {
     const requestNotifyPermission = () => {
         Notification.requestPermission();
         enqueueSnackbar("You must give notification permission to app", {
-            title: "Notification Permission",
             variant: 'warning',
+            anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'center'
+            },
+            preventDuplicate: true
         })
     }
 
@@ -71,9 +75,8 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar(body, {
+        enqueueSnackbar(<p><b>New signal Received</b>{body}</p>, {
             variant: 'info',
-            title: "New signal Received",
         })
         const audioRef = audioPlayer.current;
         audioRef.play()
