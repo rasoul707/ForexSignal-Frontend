@@ -24,7 +24,7 @@ const BottomNavigationMenu = () => {
                     label="Home"
                     value=""
                     icon={<HomeRoundedIcon />}
-                // style={{ color: val !== "" && "green" }}
+                    style={{ color: val !== "" && "#0b7f2a" }}
 
                 />
                 {/* articles */}
@@ -32,21 +32,21 @@ const BottomNavigationMenu = () => {
                     label="News"
                     value="news"
                     icon={<ArticleRoundedIcon />}
-                // style={{ color: val !== "news" && "blue" }}
+                    style={{ color: val !== "news" && "#12595f" }}
                 />
                 {/* ticket & learning */}
                 <BottomNavigationAction
                     label="Support"
                     value="support"
                     icon={<ContactSupportRoundedIcon />}
-                // style={{ color: val !== "support" && "orange" }}
+                    style={{ color: val !== "support" && "#e06311" }}
                 />
                 {/* user edit .... */}
                 <BottomNavigationAction
                     label="Profile"
                     value="profile"
                     icon={<AccountCircleRoundedIcon />}
-                // style={{ color: val !== "profile" && "blue" }}
+                    style={{ color: val !== "profile" && "#12595f" }}
                 />
 
             </BottomNavigation>
