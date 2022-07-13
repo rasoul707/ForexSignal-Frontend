@@ -47,7 +47,7 @@ const Panel = () => {
     }, [])
 
     useEffect(() => {
-        playNotifySound(true)
+        showAllowNotifyAlert()
         setTimeout(async () => {
             await getSignalsAlertList()
         }, 500)
@@ -65,32 +65,38 @@ const Panel = () => {
         });
     }
 
+    const showAllowNotifyAlert = () => {
+        enqueueSnackbar("Do you want receive notification when arrive signal?", {
+            variant: 'info',
+            persist: true,
+            anchorOrigin: {
+                vertical: 'top',
+                horizontal: 'center'
+            },
+            preventDuplicate: true,
+            action: (snackbarId) => {
+                return <Button
+                    color="inherit"
+                    size="small"
+                    children="Yes"
+                    onClick={() => {
+                        closeSnackbar(snackbarId)
+                        if (Notification.permission !== 'granted') Notification.requestPermission();
+                    }}
+                />
+            }
+        })
+    }
+
+
+
     const playNotifySound = (muted = false) => {
         const audioRef = audioPlayer.current;
         audioRef.muted = muted
         audioRef.play()
             .then(_ => { })
             .catch(error => {
-                enqueueSnackbar("Do you want receive notification when arrive signal?", {
-                    variant: 'info',
-                    persist: true,
-                    anchorOrigin: {
-                        vertical: 'top',
-                        horizontal: 'center'
-                    },
-                    preventDuplicate: true,
-                    action: (snackbarId) => {
-                        return <Button
-                            color="inherit"
-                            size="small"
-                            children="Yes"
-                            onClick={() => {
-                                closeSnackbar(snackbarId)
-                                if (Notification.permission !== 'granted') Notification.requestPermission();
-                            }}
-                        />
-                    }
-                })
+                showAllowNotifyAlert()
             });
     }
 
@@ -120,8 +126,6 @@ const Panel = () => {
             return
         }
 
-        if (Notification.permission !== 'granted') Notification.requestPermission();
-
         wsSignals(user.broker).onmessage = function (event) {
             const { data } = JSON.parse(event.data);
             if (!data.id) {
@@ -133,16 +137,12 @@ const Panel = () => {
             }
         }
 
-
         try {
             const response = await API.GET(true)('notice/signal/?broker=' + user.broker + '&per=100')
             dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
         } catch (error) {
             enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
         }
-
-
-
 
     }
 
