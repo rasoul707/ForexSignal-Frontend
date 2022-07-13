@@ -31,14 +31,15 @@ function App() {
       try {
         await API.POST(false)('auth/token/verify/', { token: access_token })
         await getUserInfo()
-        setInterval(async () => { await refreshToken() }, 30000)
+        setInterval(async () => { await refreshToken() }, 60000)
       } catch (error) {
         await refreshToken()
         await getUserInfo()
-        setInterval(async () => { await refreshToken() }, 30000)
+        setInterval(async () => { await refreshToken() }, 60000)
       }
     }
     else {
+      localStorage.clear()
       setLoadMain(true)
       appLoader(false)
     }
@@ -51,12 +52,7 @@ function App() {
       const response = await API.POST(false)('auth/token/refresh/', { refresh: refresh_token })
       localStorage.setItem("access_token", response.data.access);
     } catch (error) {
-      if (error !== undefined) {
-        // localStorage.clear()
-        // setLoadMain(true)
-        // appLoader(false)
-        // window.location.reload()
-      }
+
     }
   }
 
@@ -64,10 +60,17 @@ function App() {
     try {
       const response = await API.GET(true)('auth/user/')
       dispatch({ type: 'USER_INFO', payload: { user: response.data } })
+      localStorage.setItem('user_data', JSON.stringify(response.data));
     } catch (error) {
-      if (error !== undefined) {
-        // localStorage.clear()
-        // window.location.reload()
+      if (error === undefined) {
+        const userLocal = localStorage.getItem('user_data')
+        if (userLocal) {
+          dispatch({ type: 'USER_INFO', payload: { user: JSON.parse(userLocal) } })
+        }
+      }
+      else {
+        localStorage.clear()
+        window.location.reload()
       }
     }
 
