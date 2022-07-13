@@ -68,7 +68,7 @@ const Panel = () => {
         enqueueSnackbar([
             <AlertTitle>New signal Received</AlertTitle>,
             <br></br>,
-            { body }
+            body
         ], {
             variant: 'info',
             persist: true,
