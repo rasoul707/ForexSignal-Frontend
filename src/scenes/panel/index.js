@@ -127,7 +127,7 @@ const Panel = () => {
         </Box>
         <BottomNavigationMenu />
         <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
-        <button onClick={audioPlayer.current.play} />
+        <button onClick={() => audioPlayer.current?.play()} />
         <LicensesDialog
             {...{
                 open: licenseDigOpen,
