@@ -65,10 +65,7 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar(<Typography><b>New Signal: </b>{body}</Typography>, {
-            variant: 'info',
-            persist: true,
-        })
+        enqueueSnackbar(<Typography><b>New Signal: </b>{body}</Typography>, { variant: 'info' })
         const audioRef = audioPlayer.current;
         audioRef.play()
             .then(_ => { })
@@ -76,7 +73,7 @@ const Panel = () => {
                 enqueueSnackbar("Do you want to play a sound when receive signal?", {
                     variant: 'info',
                     anchorOrigin: {
-                        vertical: 'bottom',
+                        vertical: 'top',
                         horizontal: 'center'
                     },
                     preventDuplicate: true,
@@ -87,7 +84,7 @@ const Panel = () => {
 
     const newSignalNotify = (data) => {
         const m = data.description.split(",")
-        const body = data.title + " > " + m[0] + " ~ " + m[1];
+        const body = " 💰" + data.title + " 🎯 " + m[0] + " ⏳ " + m[1];
         if (Notification.permission === 'granted') {
             nativeNotification(body)
         }
@@ -105,6 +102,8 @@ const Panel = () => {
             dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
             return
         }
+
+        if (Notification.permission !== 'granted') Notification.requestPermission();
 
         wsSignals(user.broker).onmessage = function (event) {
             const { data } = JSON.parse(event.data);

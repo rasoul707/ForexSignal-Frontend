@@ -93,7 +93,7 @@ function App() {
           variant: 'error',
           persist: true,
           anchorOrigin: {
-            vertical: 'bottom',
+            vertical: 'top',
             horizontal: 'center'
           },
           preventDuplicate: true
