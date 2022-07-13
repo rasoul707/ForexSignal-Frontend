@@ -47,6 +47,7 @@ const Panel = () => {
     }, [])
 
     useEffect(() => {
+        playNotifySound(true)
         setTimeout(async () => {
             await getSignalsAlertList()
         }, 500)
@@ -64,9 +65,9 @@ const Panel = () => {
         });
     }
 
-    const inAppNotification = (body) => {
-        enqueueSnackbar(<Typography><b>New Signal: </b>{body}</Typography>, { variant: 'info' })
+    const playNotifySound = (muted = false) => {
         const audioRef = audioPlayer.current;
+        audioRef.muted = muted
         audioRef.play()
             .then(_ => { })
             .catch(error => {
@@ -80,6 +81,11 @@ const Panel = () => {
                     action: (snackbarId) => <Button color="inherit" size="small" children="Yes" onClick={() => closeSnackbar(snackbarId)} />
                 })
             });
+    }
+
+    const inAppNotification = (body) => {
+        enqueueSnackbar(<Typography><b>New Signal: </b>{body}</Typography>, { variant: 'info' })
+        playNotifySound()
     }
 
     const newSignalNotify = (data) => {
@@ -152,7 +158,7 @@ const Panel = () => {
             </Switch>
         </Box>
         <BottomNavigationMenu />
-        <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
+        <audio ref={audioPlayer} src={"/static/audio/notify.wav"} muted />
         <LicensesDialog
             {...{
                 open: licenseDigOpen,

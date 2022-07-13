@@ -136,7 +136,7 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
                 </Grid>
             </Grid>
 
-            <Grid item xs="auto">
+            <Grid item xs="auto" sx={{ position: 'absolute', right: '20px' }}>
                 <Typography
                     sx={{ display: 'inline', pl: 1 }}
                     component="span"
