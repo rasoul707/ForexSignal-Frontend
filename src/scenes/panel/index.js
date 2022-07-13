@@ -62,12 +62,20 @@ const Panel = () => {
         navigator.serviceWorker.ready.then(function (registration) {
             registration.showNotification('New signal received', {
                 icon: '/logo.v2.192.png',
-                body: body + moment(time).valueOf(),
+                body: body,
                 data: 'Trader Signal',
                 vibrate: [200, 100, 200],
                 timestamp: moment(time).valueOf(),
                 tag: moment(time).valueOf()
-            });
+            })
+                .then(() => new Promise(resolve => setTimeout(resolve, 15000))) // keep service worker alive
+                .then(() => registration.getNotifications())
+                .then(notifications => {
+                    const notification = notifications.find(notification => notification.tag === moment(time).valueOf())
+                    if (notification) {
+                        notification.close()
+                    }
+                })
         });
     }
 
@@ -108,7 +116,7 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar(<Typography><b>New Signal: </b>{body}</Typography>, { variant: 'info' })
+        enqueueSnackbar(<Typography><b>New Signal: </b>{body}</Typography>, { variant: 'info', })
         playNotifySound()
     }
 
