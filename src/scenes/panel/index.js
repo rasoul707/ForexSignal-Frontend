@@ -2,7 +2,7 @@
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AppBar from "../../components/AppBar"
 import BottomNavigationMenu from "../../components/BottomNavigationMenu"
-import { Box, Button } from "@mui/material"
+import { Box, Button, AlertTitle } from "@mui/material"
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
@@ -75,7 +75,7 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar(<p><b>New signal Received</b><br></br>{body}</p>, {
+        enqueueSnackbar(<p><AlertTitle>New signal Received</AlertTitle>{body}</p>, {
             variant: 'info',
         })
         const audioRef = audioPlayer.current;
@@ -90,7 +90,7 @@ const Panel = () => {
                     },
                     preventDuplicate: true,
                     action: [
-                        <Button children="Yes" />
+                        <Button color="inherit" size="small" children="Yes" />
                     ]
                 })
             });
@@ -103,7 +103,7 @@ const Panel = () => {
             nativeNotification(body)
         }
         else {
-            requestNotifyPermission()
+            // requestNotifyPermission()
             inAppNotification(body)
         }
     }
