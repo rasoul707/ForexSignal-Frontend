@@ -2,7 +2,7 @@
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AppBar from "../../components/AppBar"
 import BottomNavigationMenu from "../../components/BottomNavigationMenu"
-import { Box, Button, AlertTitle, Typography } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ import * as API from "../../api";
 
 import { haveLicense } from "../../components/LicenseAlert"
 import LicensesDialog from "../../components/LicenseDialog"
-
+import moment from 'moment'
 
 const Panel = () => {
 
@@ -58,13 +58,15 @@ const Panel = () => {
 
 
 
-    const nativeNotification = (body) => {
+    const nativeNotification = (body, time) => {
         navigator.serviceWorker.ready.then(function (registration) {
             registration.showNotification('New signal received', {
                 icon: '/logo.v2.192.png',
-                body: body,
+                body: body + moment(time).valueOf(),
                 data: 'Trader Signal',
                 vibrate: [200, 100, 200],
+                timestamp: moment(time).valueOf(),
+                tag: moment(time).valueOf()
             });
         });
     }
@@ -114,7 +116,7 @@ const Panel = () => {
         const m = data.description.split(",")
         const body = " 💰" + data.title + " 🎯 " + m[0] + " ⏳ " + m[1];
         if (Notification.permission === 'granted') {
-            nativeNotification(body)
+            nativeNotification(body, data.created_datetime)
         }
         else {
             inAppNotification(body)
