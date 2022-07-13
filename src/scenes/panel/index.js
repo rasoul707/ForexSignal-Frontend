@@ -68,14 +68,6 @@ const Panel = () => {
                 timestamp: moment(time).valueOf(),
                 tag: moment(time).valueOf()
             })
-                .then(() => new Promise(resolve => setTimeout(resolve, 15000))) // keep service worker alive
-                .then(() => registration.getNotifications())
-                .then(notifications => {
-                    const notification = notifications.find(notification => notification.tag === moment(time).valueOf())
-                    if (notification) {
-                        notification.close()
-                    }
-                })
         });
     }
 
