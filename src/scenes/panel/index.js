@@ -2,7 +2,7 @@
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AppBar from "../../components/AppBar"
 import BottomNavigationMenu from "../../components/BottomNavigationMenu"
-import { Box, Button, AlertTitle } from "@mui/material"
+import { Box, Button, AlertTitle, Typography } from "@mui/material"
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
@@ -68,7 +68,7 @@ const Panel = () => {
         enqueueSnackbar([
             <AlertTitle>New signal Received</AlertTitle>,
             <br></br>,
-            body
+            <Typography>{body}</Typography>
         ], {
             variant: 'info',
             persist: true,
