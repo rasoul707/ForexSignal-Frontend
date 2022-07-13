@@ -27,7 +27,7 @@ const Panel = () => {
 
     const history = useHistory()
     const location = useLocation()
-    const { enqueueSnackbar, } = useSnackbar()
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
 
     const user = useSelector(state => state.auth.user)
@@ -75,7 +75,7 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar(<p><AlertTitle>New signal Received</AlertTitle>{body}</p>, {
+        enqueueSnackbar(<><AlertTitle>New signal Received</AlertTitle>{body}</>, {
             variant: 'info',
         })
         const audioRef = audioPlayer.current;
@@ -89,9 +89,7 @@ const Panel = () => {
                         horizontal: 'center'
                     },
                     preventDuplicate: true,
-                    action: [
-                        <Button color="inherit" size="small" children="Yes" />
-                    ]
+                    action: (snackbarId) => <Button color="inherit" size="small" children="Yes" onClick={() => closeSnackbar(snackbarId)} />
                 })
             });
     }
