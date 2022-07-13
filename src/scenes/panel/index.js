@@ -34,7 +34,6 @@ const Panel = () => {
 
     const dispatch = useDispatch()
     const audioPlayer = React.useRef(null);
-    const audioPlayBtn = React.useRef(null);
 
     useEffect(() => {
         const parsed = queryString.parse(location.search);
@@ -54,7 +53,45 @@ const Panel = () => {
     }, [user?.broker])
 
 
+    const requestNotifyPermission = () => {
+        Notification.requestPermission();
+        enqueueSnackbar("You must give notification permission to app", {
+            title: "Notification Permission",
+            variant: 'warning',
+        })
+    }
 
+    const nativeNotification = (body) => {
+        new Notification("New signal received", {
+            icon: '/logo.v2.192.png',
+            body: body,
+            data: 'Trader Signal',
+            vibrate: [200, 100, 200],
+        });
+    }
+
+    const inAppNotification = (body) => {
+        enqueueSnackbar(body, {
+            variant: 'info',
+            title: "New signal Received",
+        })
+        const audioRef = audioPlayer.current;
+        audioRef.play()
+            .then(_ => { })
+            .catch(error => { });
+    }
+
+    const newSignalNotify = (data) => {
+        const m = data.description.split(",")
+        const body = data.title + " > " + m[0] + " ~ " + m[1];
+        if (Notification.permission === 'granted') {
+            nativeNotification(body)
+        }
+        else {
+            requestNotifyPermission()
+            inAppNotification(body)
+        }
+    }
 
 
     const getSignalsAlertList = async () => {
@@ -66,6 +103,8 @@ const Panel = () => {
             return
         }
 
+        if (Notification.permission !== 'granted') requestNotifyPermission()
+
         wsSignals(user.broker).onmessage = function (event) {
             const { data } = JSON.parse(event.data);
             if (!data.id) {
@@ -73,22 +112,7 @@ const Panel = () => {
                     type: 'SIGNAL_LIST_ADD',
                     payload: { signal: data }
                 })
-                enqueueSnackbar("New Signal Received", {
-                    variant: 'info',
-                    action: <Button color="inherit" size="small" onClick={() => { history.push("/") }} children="SHOW" />,
-                })
-
-                const audioRef = audioPlayer.current;
-                const audio = audioRef.play()
-
-                // audio.then(_ => {
-                // }).catch(error => {
-                //     console.log("Hi")
-                //     audioRef.muted = true;
-                //     audioRef.play();
-                // });
-                // audioPlayBtn.current?.click()
-
+                newSignalNotify(data);
             }
         }
 
@@ -128,8 +152,7 @@ const Panel = () => {
             </Switch>
         </Box>
         <BottomNavigationMenu />
-        <audio ref={audioPlayer} src={"/static/audio/notify.wav"} muted />
-        <button ref={audioPlayBtn} onClick={() => audioPlayer.current?.play()} />
+        <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
         <LicensesDialog
             {...{
                 open: licenseDigOpen,
