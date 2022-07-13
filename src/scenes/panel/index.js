@@ -67,6 +67,7 @@ const Panel = () => {
     const inAppNotification = (body) => {
         enqueueSnackbar(<><AlertTitle>New signal Received</AlertTitle><br></br>{body}</>, {
             variant: 'info',
+            persist: true,
         })
         const audioRef = audioPlayer.current;
         audioRef.play()
