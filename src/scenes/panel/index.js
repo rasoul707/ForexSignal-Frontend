@@ -53,17 +53,7 @@ const Panel = () => {
     }, [user?.broker])
 
 
-    const requestNotifyPermission = () => {
-        Notification.requestPermission();
-        enqueueSnackbar("You must give notification permission to app", {
-            variant: 'warning',
-            anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'center'
-            },
-            preventDuplicate: true
-        })
-    }
+
 
     const nativeNotification = (body) => {
         new Notification("New signal received", {
@@ -75,7 +65,7 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar(<><AlertTitle>New signal Received</AlertTitle>{body}</>, {
+        enqueueSnackbar(<><AlertTitle>New signal Received</AlertTitle><br></br>{body}</>, {
             variant: 'info',
         })
         const audioRef = audioPlayer.current;
@@ -101,7 +91,6 @@ const Panel = () => {
             nativeNotification(body)
         }
         else {
-            // requestNotifyPermission()
             inAppNotification(body)
         }
     }
@@ -115,8 +104,6 @@ const Panel = () => {
             dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
             return
         }
-
-        if (Notification.permission !== 'granted') requestNotifyPermission()
 
         wsSignals(user.broker).onmessage = function (event) {
             const { data } = JSON.parse(event.data);
