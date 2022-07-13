@@ -2,7 +2,7 @@
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AppBar from "../../components/AppBar"
 import BottomNavigationMenu from "../../components/BottomNavigationMenu"
-import { Box, } from "@mui/material"
+import { Box, Button } from "@mui/material"
 
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
@@ -75,13 +75,25 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar(<p><b>New signal Received</b>{body}</p>, {
+        enqueueSnackbar(<p><b>New signal Received</b><br></br>{body}</p>, {
             variant: 'info',
         })
         const audioRef = audioPlayer.current;
         audioRef.play()
             .then(_ => { })
-            .catch(error => { });
+            .catch(error => {
+                enqueueSnackbar("Do you want to play a sound when receive signal?", {
+                    variant: 'info',
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'center'
+                    },
+                    preventDuplicate: true,
+                    action: [
+                        <Button children="Yes" />
+                    ]
+                })
+            });
     }
 
     const newSignalNotify = (data) => {
