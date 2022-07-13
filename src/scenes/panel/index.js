@@ -66,9 +66,10 @@ const Panel = () => {
                 data: 'Trader Signal',
                 vibrate: [200, 100, 200],
                 timestamp: moment(time).valueOf(),
-                tag: moment(time).valueOf()
+                tag: moment(time).valueOf(),
+                actions: [{ action: "watch", title: "Watch now" }]
             })
-        });
+        })
     }
 
     const showAllowNotifyAlert = () => {
