@@ -10,6 +10,10 @@
         lock_full_view: true,
         cross_origin_cookies: true,
       };
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const params = Object.fromEntries(urlSearchParams.entries());
+      if (params.email) $crisp.push(["set", "user:email", params.email]);
+      if (params.nickname) $crisp.push(["set", "user:nickname", params.nickname]);
       (function () {
         const d = document;
         const s = d.createElement("script");

@@ -1,12 +1,11 @@
 import * as React from "react"
-
 import Layout from "../../../components/Layout"
-
 import { CircularProgress, Box } from '@mui/material';
+import { useSelector, } from "react-redux";
 
 
 const Page = () => {
-
+    const user = useSelector(state => state.auth.user)
     return <Layout >
         <Box sx={{
             position: "relative",
@@ -21,7 +20,7 @@ const Page = () => {
             <CircularProgress size={20} />
             <iframe
                 title="help"
-                src="/chat.html"
+                src={"/chat.html?email=" + user.email + "&nickname=" + user.first_name + " " + user.last_name}
                 style={{
                     top: 0,
                     left: 0,
