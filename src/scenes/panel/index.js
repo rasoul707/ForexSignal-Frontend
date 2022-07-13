@@ -59,17 +59,13 @@ const Panel = () => {
 
 
     const nativeNotification = (body) => {
-        Notification.requestPermission(function (result) {
-            if (result === 'granted') {
-                navigator.serviceWorker.ready.then(function (registration) {
-                    registration.showNotification('New signal received', {
-                        icon: '/logo.v2.192.png',
-                        body: body,
-                        data: 'Trader Signal',
-                        vibrate: [200, 100, 200],
-                    });
-                });
-            }
+        navigator.serviceWorker.ready.then(function (registration) {
+            registration.showNotification('New signal received', {
+                icon: '/logo.v2.192.png',
+                body: body,
+                data: 'Trader Signal',
+                vibrate: [200, 100, 200],
+            });
         });
     }
 
@@ -94,6 +90,7 @@ const Panel = () => {
                 />
             }
         })
+
     }
 
 
