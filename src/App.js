@@ -39,7 +39,6 @@ function App() {
       }
     }
     else {
-      localStorage.clear()
       setLoadMain(true)
       appLoader(false)
     }
@@ -53,10 +52,10 @@ function App() {
       localStorage.setItem("access_token", response.data.access);
     } catch (error) {
       if (error !== undefined) {
-        localStorage.clear()
-        setLoadMain(true)
-        appLoader(false)
-        window.location.reload()
+        // localStorage.clear()
+        // setLoadMain(true)
+        // appLoader(false)
+        // window.location.reload()
       }
     }
   }
@@ -67,8 +66,8 @@ function App() {
       dispatch({ type: 'USER_INFO', payload: { user: response.data } })
     } catch (error) {
       if (error !== undefined) {
-        localStorage.clear()
-        window.location.reload()
+        // localStorage.clear()
+        // window.location.reload()
       }
     }
 
