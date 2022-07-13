@@ -77,16 +77,17 @@ const Panel = () => {
                     variant: 'info',
                     action: <Button color="inherit" size="small" onClick={() => { history.push("/") }} children="SHOW" />,
                 })
-                // document.body.trigger('click')
-                // const audioRef = audioPlayer.current;
-                // const audio = audioRef.play()
+
+                const audioRef = audioPlayer.current;
+                const audio = audioRef.play()
+
                 // audio.then(_ => {
                 // }).catch(error => {
                 //     console.log("Hi")
                 //     audioRef.muted = true;
                 //     audioRef.play();
                 // });
-                audioPlayBtn.current?.click()
+                // audioPlayBtn.current?.click()
 
             }
         }
@@ -127,7 +128,7 @@ const Panel = () => {
             </Switch>
         </Box>
         <BottomNavigationMenu />
-        <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
+        <audio ref={audioPlayer} src={"/static/audio/notify.wav"} muted />
         <button ref={audioPlayBtn} onClick={() => audioPlayer.current?.play()} />
         <LicensesDialog
             {...{
