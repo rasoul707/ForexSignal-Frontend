@@ -1,4 +1,4 @@
-const cacheName = "cache-v270";
+const cacheName = "cache-v275";
 const staticAssets = [
     '/',
     '/news',
@@ -14,7 +14,7 @@ const staticAssets = [
 
     '/static/css/main.96e32a7a.chunk.css',
     '/static/js/2.60f9ce7e.chunk.js',
-    '/static/js/main.9dfb0c02.chunk.js',
+    '/static/js/main.e3e96284.chunk.js',
 
     '/index.html',
     '/favicon.ico',
