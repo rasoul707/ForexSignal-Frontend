@@ -83,7 +83,7 @@ const Panel = () => {
                 audio.then(_ => {
                 }).catch(error => {
                     console.log("Hi")
-                    audioRef.muted = false;
+                    audioRef.muted = true;
                     audioRef.play();
                 });
 
