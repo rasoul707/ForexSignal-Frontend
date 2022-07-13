@@ -84,8 +84,17 @@ const Panel = () => {
                     variant: 'info',
                     action: <Button color="inherit" size="small" onClick={() => { history.push("/") }} children="SHOW" />,
                 })
-                document.body.click()
-                audioPlayer.current.play();
+                const audioRef = audioPlayer.current;
+                const audio = audioRef.play()
+                if (audio !== undefined) {
+                    audio.then(_ => {
+                        audioRef.muted = false;
+                        audioRef.play();
+                    }).catch(error => {
+                        audioRef.muted = true;
+                        audioRef.play();
+                    });
+                }
             }
         }
 
