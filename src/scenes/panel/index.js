@@ -77,16 +77,16 @@ const Panel = () => {
                     variant: 'info',
                     action: <Button color="inherit" size="small" onClick={() => { history.push("/") }} children="SHOW" />,
                 })
-                document.body.trigger('click')
+                // document.body.trigger('click')
                 const audioRef = audioPlayer.current;
                 const audio = audioRef.play()
-                if (audio !== undefined) {
-                    audio.then(_ => {
-                    }).catch(error => {
-                        document.body.trigger('click')
-                        // audioRef.play();
-                    });
-                }
+                audio.then(_ => {
+                }).catch(error => {
+                    console.log("Hi")
+                    audioRef.muted = false;
+                    // audioRef.play();
+                });
+
             }
         }
 
