@@ -148,7 +148,7 @@ const Panel = () => {
 
         try {
             const response = await API.GET(true)('notice/signal/?broker=' + user.broker + '&per=25')
-            dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
+            dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data.results } })
         } catch (error) {
             enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
         }
