@@ -65,11 +65,7 @@ const Panel = () => {
     }
 
     const inAppNotification = (body) => {
-        enqueueSnackbar([
-            <AlertTitle>New signal Received</AlertTitle>,
-            <br></br>,
-            <Typography>{body}</Typography>
-        ], {
+        enqueueSnackbar(<Typography><b>New Signal: </b>{body}</Typography>, {
             variant: 'info',
             persist: true,
         })
