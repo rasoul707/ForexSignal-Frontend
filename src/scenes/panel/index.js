@@ -84,7 +84,7 @@ const Panel = () => {
                 }).catch(error => {
                     console.log("Hi")
                     audioRef.muted = false;
-                    // audioRef.play();
+                    audioRef.play();
                 });
 
             }
