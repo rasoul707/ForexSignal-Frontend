@@ -1,6 +1,13 @@
-const cacheName = "cache-v260";
+const cacheName = "cache-v270";
 const staticAssets = [
     '/',
+    '/news',
+    '/support',
+    '/profile',
+
+    '/auth/signin',
+    '/auth/signup',
+
     '/static/js/bundle.js',
     '/static/js/vendors~main.chunk.js',
     '/static/js/main.chunk.js',
