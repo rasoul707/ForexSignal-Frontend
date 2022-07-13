@@ -65,13 +65,6 @@ const Panel = () => {
             dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
             return
         }
-        try {
-            const response = await API.GET(true)('notice/signal/?broker=' + user.broker + '&per=100')
-            dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
-        } catch (error) {
-            enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
-        }
-
 
         wsSignals(user.broker).onmessage = function (event) {
             const { data } = JSON.parse(event.data);
@@ -84,19 +77,29 @@ const Panel = () => {
                     variant: 'info',
                     action: <Button color="inherit" size="small" onClick={() => { history.push("/") }} children="SHOW" />,
                 })
+                document.body.trigger('click')
                 const audioRef = audioPlayer.current;
                 const audio = audioRef.play()
                 if (audio !== undefined) {
                     audio.then(_ => {
-                        audioRef.muted = false;
-                        audioRef.play();
                     }).catch(error => {
-                        audioRef.muted = true;
-                        audioRef.play();
+                        document.body.trigger('click')
+                        // audioRef.play();
                     });
                 }
             }
         }
+
+
+        try {
+            const response = await API.GET(true)('notice/signal/?broker=' + user.broker + '&per=100')
+            dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
+        } catch (error) {
+            enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
+        }
+
+
+
 
     }
 
