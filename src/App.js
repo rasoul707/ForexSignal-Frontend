@@ -39,8 +39,7 @@ function App() {
       }
     }
     else {
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
+      localStorage.clear()
       setLoadMain(true)
       appLoader(false)
     }
@@ -54,8 +53,7 @@ function App() {
       localStorage.setItem("access_token", response.data.access);
     } catch (error) {
       if (error !== undefined) {
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
+        localStorage.clear()
         setLoadMain(true)
         appLoader(false)
         window.location.reload()
@@ -68,8 +66,10 @@ function App() {
       const response = await API.GET(true)('auth/user/')
       dispatch({ type: 'USER_INFO', payload: { user: response.data } })
     } catch (error) {
-      localStorage.clear()
-      window.location.reload()
+      if (error !== undefined) {
+        localStorage.clear()
+        window.location.reload()
+      }
     }
 
     setLoadMain(true)
