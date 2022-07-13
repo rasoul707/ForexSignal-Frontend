@@ -94,8 +94,8 @@ const LicensesDialog = ({ open, handleClose, }) => {
             />
             <Grid container spacing={2} alignItems="stretch" justifyContent="center">
                 {licenseList.map((data, index) => {
-                    return <Grid item md={6} xs={12}>
-                        <LicensePlanItem key={index} {...data} buy={buy} index={index} />
+                    return <Grid item md={6} xs={12} key={index}>
+                        <LicensePlanItem  {...data} buy={buy} index={index} />
                     </Grid>
                 })}
             </Grid>
