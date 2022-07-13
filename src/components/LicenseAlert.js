@@ -1,19 +1,22 @@
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button } from '@mui/material';
-import { useHistory } from "react-router-dom";
-
 import moment from "moment"
 
 
 
-const LicenseAlert = () => {
+const LicenseAlert = ({ dialogMode }) => {
     const user = useSelector(state => state.auth.user)
-    const history = useHistory()
+    const dispatch = useDispatch();
 
     const { license, license_expire } = user
     const expiration = moment(license_expire).diff(moment())
     const fromNow = moment(license_expire).fromNow()
+
+
+    const openLicenseDig = () => {
+        dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
+    }
 
 
 
@@ -22,9 +25,8 @@ const LicenseAlert = () => {
             severity="error"
             sx={{ mb: 2 }}
             action={
-                <Button color="inherit" size="small" onClick={() => { history.push("/profile/license") }}>
-                    Buy license
-                </Button>
+                dialogMode ??
+                <Button color="inherit" size="small" onClick={openLicenseDig} children="Buy license" />
             }
             children="Your don't have any license"
         />
@@ -34,8 +36,10 @@ const LicenseAlert = () => {
             return <Alert
                 severity="error"
                 sx={{ mb: 2 }}
-                children={"Your trial license expired" + fromNow}
-                action={<Button color="inherit" size="small" onClick={() => { history.push("/profile/license") }} children="Buy license" />}
+                children={"Your trial license expired " + fromNow}
+                action={
+                    dialogMode ?? <Button color="inherit" size="small" onClick={openLicenseDig} children="Buy license" />
+                }
             />
         }
         else {
@@ -43,7 +47,9 @@ const LicenseAlert = () => {
                 severity="info"
                 sx={{ mb: 2 }}
                 children={"Your trial license will expire " + fromNow}
-                action={<Button color="inherit" size="small" onClick={() => { history.push("/profile/license") }} children="Buy license" />}
+                action={
+                    dialogMode ?? <Button color="inherit" size="small" onClick={openLicenseDig} children="Buy license" />
+                }
             />
         }
     }
@@ -59,7 +65,9 @@ const LicenseAlert = () => {
             severity="error"
             sx={{ mb: 2 }}
             children={"Your license expired " + fromNow}
-            action={<Button color="inherit" size="small" onClick={() => { history.push("/profile/license") }} children="Buy license" />}
+            action={
+                dialogMode ?? <Button color="inherit" size="small" onClick={openLicenseDig} children="Buy license" />
+            }
         />
     }
 

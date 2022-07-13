@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react"
-import { TextField, Button, Checkbox, FormControlLabel, Typography, Grid, Card } from "@mui/material"
+import { TextField, Button, Checkbox, FormControlLabel, Typography, Grid, Card, Link } from "@mui/material"
 import { LoadingButton } from '@mui/lab'
 import { Link as LinkRoute, useHistory } from "react-router-dom"
 import { useState } from "react";
@@ -8,7 +8,7 @@ import Logo from "../../components/Logo"
 import * as API from "../../api";
 import { useSnackbar } from 'notistack';
 import validex from 'validex'
-
+import TermsDialog from "../../components/TermsDialog"
 
 
 const SignUp = () => {
@@ -19,6 +19,7 @@ const SignUp = () => {
     const [disabled, setDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const [openDialogTerms, setOpenDialogTerms] = useState(false);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -157,12 +158,15 @@ const SignUp = () => {
                     disabled={disabled}
                 />
                 <FormControlLabel
-                    label="I agree to all terms and conditions."
+                    label={<>
+                        I agree to all <Link component={LinkRoute} to="#" onClick={() => setOpenDialogTerms(true)}>terms and conditions.</Link>
+                    </>}
                     control={<Checkbox />}
                     sx={{ marginTop: (theme) => theme.spacing(2) }}
                     checked={acceptTerms}
                     onChange={(e) => setAcceptTerms(e.target.checked)}
                     disabled={disabled}
+
                 />
                 <LoadingButton
                     variant="contained"
@@ -182,6 +186,12 @@ const SignUp = () => {
                     disabled={disabled}
                 />
             </Grid>
+            <TermsDialog
+                {...{
+                    open: openDialogTerms,
+                    handleClose: () => setOpenDialogTerms(false)
+                }}
+            />
         </Card>
     );
 

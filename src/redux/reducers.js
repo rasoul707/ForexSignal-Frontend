@@ -40,6 +40,7 @@ const panelInitial = {
     signalsList: null,
     newsList: null,
     licenseOk: false,
+    openLicenseDialog: false
 }
 
 export const panelReducer = (state = panelInitial, action) => {
@@ -74,6 +75,11 @@ export const panelReducer = (state = panelInitial, action) => {
             return {
                 ...state,
                 licenseOk: action.payload.licenseOk
+            }
+        case 'LICENSE_OPEN':
+            return {
+                ...state,
+                openLicenseDialog: action.payload.open
             }
         default:
             return { ...state };

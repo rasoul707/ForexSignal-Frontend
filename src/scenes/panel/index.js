@@ -20,7 +20,7 @@ import { wsSignals, } from "../../api/socket"
 import * as API from "../../api";
 
 import { haveLicense } from "../../components/LicenseAlert"
-
+import LicensesDialog from "../../components/LicenseDialog"
 
 
 const Panel = () => {
@@ -61,7 +61,10 @@ const Panel = () => {
 
         if (!user) return
         if (!user.broker) return
-        if (!haveLicense(user)) return
+        if (!haveLicense(user)) {
+            dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
+            return
+        }
         try {
             const response = await API.GET(true)('notice/signal/?broker=' + user.broker + '&per=100')
             dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data } })
@@ -87,6 +90,8 @@ const Panel = () => {
 
     }
 
+    const licenseDigOpen = useSelector(state => state.panel.openLicenseDialog)
+
 
 
 
@@ -109,7 +114,12 @@ const Panel = () => {
         </Box>
         <BottomNavigationMenu />
         <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
-
+        <LicensesDialog
+            {...{
+                open: licenseDigOpen,
+                handleClose: () => dispatch({ type: 'LICENSE_OPEN', payload: { open: false } })
+            }}
+        />
     </Box>
 }
 export default Panel;

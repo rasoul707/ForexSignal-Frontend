@@ -1,10 +1,9 @@
 
 import * as React from 'react';
 import { Card, Button, CardContent, Typography, CardHeader, } from '@mui/material';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment"
 import { haveLicense } from '../../../components/LicenseAlert';
-import LicensesDialog from "../../../components/LicenseDialog"
 
 
 
@@ -12,7 +11,7 @@ import LicensesDialog from "../../../components/LicenseDialog"
 const License = () => {
 
     const user = useSelector(state => state.auth.user)
-    const [openDialogLicense, setDialogLicenseOpen] = React.useState(false)
+    const dispatch = useDispatch()
 
 
 
@@ -68,15 +67,10 @@ const License = () => {
                 variant="contained"
                 size="large"
                 children="Buy"
-                onClick={() => setDialogLicenseOpen(true)}
+                onClick={() => dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })}
                 disabled={haveLicense(user) && !license.is_trial}
             />
-            <LicensesDialog
-                {...{
-                    open: openDialogLicense,
-                    handleClose: () => setDialogLicenseOpen(false)
-                }}
-            />
+
         </CardContent>
     </Card >
 }

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import * as React from 'react';
-import { Card, Button, CardContent, CardActionArea, Typography, Dialog, DialogTitle, DialogContent, Grid, DialogActions, Slide } from '@mui/material';
+import { Card, Button, CardContent, CardActionArea, Typography, Dialog, DialogTitle, DialogContent, Grid, DialogActions, Slide, Alert, } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import * as API from "../api";
-import { useHistory } from 'react-router-dom';
-
+import { Link as LinkRoute } from 'react-router-dom';
+import LicenseAlert from "./LicenseAlert";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -15,39 +15,46 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 
-const LicensePlanItem = ({ id, title, price, duration, unlimited, buy }) => {
-    return <Grid item md={6} xs={12}>
-        <Card sx={{ backgroundColor: "#ff9800", height: '100%', minWidth: 200 }} >
-            <CardActionArea sx={{ height: '100%', }} onClick={() => buy(id)}>
-                <Grid container sx={{ height: '100%', }} justifyContent="space-between" flexDirection="column" >
-                    <Grid item flex={1}>
-                        <CardContent >
-                            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant='button'>
-                                {title}
-                            </Typography>
-                            <Typography sx={{ fontSize: 14 }} color="text.secondary" >
-                                {unlimited ? "Unlimited" : duration + " days"}
-                            </Typography>
-                        </CardContent>
-                    </Grid>
-                    <Grid item>
-                        <CardContent sx={{ backgroundColor: "rgb(199 199 199)", p: '8px !important' }}>
-                            <Typography sx={{ fontSize: 14 }} color="text.secondary" variant='button'>
-                                {price + " $"}
-                            </Typography>
-                        </CardContent>
-                    </Grid>
+const LicensePlanItem = ({ id, title, price, duration, unlimited, buy, index }) => {
+    return <Card sx={{ backgroundColor: "#ff9800", height: '100%', minWidth: 200 }} >
+        <CardActionArea sx={{ height: '100%', }} onClick={buy ? () => buy(index) : null} disabled={!buy}>
+            <Grid container sx={{ height: '100%', }} justifyContent="space-between" flexDirection="column" >
+                <Grid item flex={1}>
+                    <CardContent >
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant='button'>
+                            {title}
+                        </Typography>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" >
+                            {unlimited ? "Unlimited" : duration + " days"}
+                        </Typography>
+                    </CardContent>
                 </Grid>
-            </CardActionArea>
-        </Card>
-    </Grid>
+                <Grid item>
+                    <CardContent sx={{ backgroundColor: "rgb(199 199 199)", p: '8px !important' }}>
+                        <Typography sx={{ fontSize: 14 }} color="text.secondary" variant='button'>
+                            {price + " $"}
+                        </Typography>
+                    </CardContent>
+                </Grid>
+            </Grid>
+        </CardActionArea>
+    </Card >
+
 }
 
 const LicensesDialog = ({ open, handleClose, }) => {
 
     const [licenseList, setLicenseList] = React.useState([])
     const { enqueueSnackbar, } = useSnackbar()
-    const history = useHistory()
+    const [payDescription, setPayDescription] = React.useState("")
+    const [planSelected, setPlanSelected] = React.useState(null)
+
+
+    const closeDig = () => {
+        setPlanSelected(null)
+        handleClose();
+    }
+
 
     React.useEffect(() => {
         const data = async () => {
@@ -56,34 +63,71 @@ const LicensesDialog = ({ open, handleClose, }) => {
                 setLicenseList(response.data)
             } catch (error) {
                 enqueueSnackbar("[getlicense]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
-                handleClose()
+                closeDig()
+            }
+            try {
+                const response = await API.GET(false)('setting/setting/')
+                setPayDescription(response.data[0].pay_description)
+            } catch (error) {
+                enqueueSnackbar("[pay_description]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
+                closeDig()
             }
         }
         data()
-    }, [])
+    }, [open])
 
     const buy = (planID) => {
-        handleClose()
-        history.push("/help?license=" + planID)
+        setPlanSelected(planID)
     }
 
 
+
+
+    const _ChoosePlan = <>
+        <DialogTitle>Choose plan</DialogTitle>
+        <DialogContent sx={{ minWidth: 400 }}>
+            <LicenseAlert dialogMode />
+            <Alert
+                severity="info"
+                sx={{ mb: 2 }}
+                children={"Choose a plan 😄"}
+            />
+            <Grid container spacing={2} alignItems="stretch" justifyContent="center">
+                {licenseList.map((data, index) => {
+                    return <Grid item md={6} xs={12}>
+                        <LicensePlanItem key={index} {...data} buy={buy} index={index} />
+                    </Grid>
+                })}
+            </Grid>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={closeDig}>Cancel</Button>
+        </DialogActions>
+    </>
+
+    const _BuyPlan = <>
+        <DialogTitle>Pay</DialogTitle>
+        <DialogContent sx={{ minWidth: 400 }}>
+
+            <LicensePlanItem key={planSelected} {...licenseList[planSelected]} />
+
+            <Typography sx={{ mt: 2 }}>
+                {payDescription}
+            </Typography>
+        </DialogContent>
+        <DialogActions>
+            <Button to="/support" onClick={closeDig} component={LinkRoute}>Contact support</Button>
+            <Button onClick={closeDig} >Cancel</Button>
+        </DialogActions>
+    </>
 
     return <Dialog
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={closeDig}
     >
-        <DialogTitle>Choose plan</DialogTitle>
-        <DialogContent>
-            <Grid container spacing={2} alignItems="stretch" justifyContent="center">
-                {licenseList.map((data, index) => <LicensePlanItem key={index} {...data} buy={buy} />)}
-            </Grid>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-        </DialogActions>
+        {planSelected !== null ? _BuyPlan : _ChoosePlan}
     </Dialog>
 
 }
