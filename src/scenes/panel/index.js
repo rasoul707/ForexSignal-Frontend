@@ -72,26 +72,28 @@ const Panel = () => {
     }
 
     const showAllowNotifyAlert = () => {
-        enqueueSnackbar("Do you want receive notification when arrive signal?", {
-            variant: 'info',
-            persist: true,
-            anchorOrigin: {
-                vertical: 'top',
-                horizontal: 'center'
-            },
-            preventDuplicate: true,
-            action: (snackbarId) => {
-                return <Button
-                    color="inherit"
-                    size="small"
-                    children="Yes"
-                    onClick={() => {
-                        closeSnackbar(snackbarId)
-                        if (Notification.permission !== 'granted') Notification.requestPermission();
-                    }}
-                />
-            }
-        })
+        if (Notification.permission !== 'granted') {
+            enqueueSnackbar("Do you want receive notification when arrive signal?", {
+                variant: 'info',
+                persist: true,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'center'
+                },
+                preventDuplicate: true,
+                action: (snackbarId) => {
+                    return <Button
+                        color="inherit"
+                        size="small"
+                        children="Yes"
+                        onClick={() => {
+                            closeSnackbar(snackbarId)
+                            Notification.requestPermission();
+                        }}
+                    />
+                }
+            })
+        }
 
     }
 
