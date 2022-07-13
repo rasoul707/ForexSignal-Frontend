@@ -47,21 +47,29 @@ const Panel = () => {
     }, [])
 
     useEffect(() => {
-        showAllowNotifyAlert()
-        setTimeout(async () => {
-            await getSignalsAlertList()
-        }, 500)
+        if (user && user.broker) {
+            setTimeout(async () => {
+                await getSignalsAlertList()
+            }, 500)
+            showAllowNotifyAlert()
+        }
     }, [user?.broker])
 
 
 
 
     const nativeNotification = (body) => {
-        new Notification("New signal received", {
-            icon: '/logo.v2.192.png',
-            body: body,
-            data: 'Trader Signal',
-            vibrate: [200, 100, 200],
+        Notification.requestPermission(function (result) {
+            if (result === 'granted') {
+                navigator.serviceWorker.ready.then(function (registration) {
+                    registration.showNotification('New signal received', {
+                        icon: '/logo.v2.192.png',
+                        body: body,
+                        data: 'Trader Signal',
+                        vibrate: [200, 100, 200],
+                    });
+                });
+            }
         });
     }
 
