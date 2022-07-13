@@ -34,7 +34,7 @@ const Panel = () => {
 
     const dispatch = useDispatch()
     const audioPlayer = React.useRef(null);
-
+    const audioPlayBtn = React.useRef(null);
 
     useEffect(() => {
         const parsed = queryString.parse(location.search);
@@ -86,6 +86,7 @@ const Panel = () => {
                 //     audioRef.muted = true;
                 //     audioRef.play();
                 // });
+                audioPlayBtn.current.play()
 
             }
         }
@@ -127,7 +128,7 @@ const Panel = () => {
         </Box>
         <BottomNavigationMenu />
         <audio ref={audioPlayer} src={"/static/audio/notify.wav"} />
-        <button onClick={() => audioPlayer.current?.play()} />
+        <button ref={audioPlayBtn} onClick={() => audioPlayer.current?.play()} />
         <LicensesDialog
             {...{
                 open: licenseDigOpen,
