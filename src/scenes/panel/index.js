@@ -71,7 +71,7 @@ const Panel = () => {
         audioRef.play()
             .then(_ => { })
             .catch(error => {
-                enqueueSnackbar("Do you want to play a sound when receive signal?", {
+                enqueueSnackbar("Do you want receive notification when arrive signal?", {
                     variant: 'info',
                     persist: true,
                     anchorOrigin: {
@@ -79,7 +79,17 @@ const Panel = () => {
                         horizontal: 'center'
                     },
                     preventDuplicate: true,
-                    action: (snackbarId) => <Button color="inherit" size="small" children="Yes" onClick={() => closeSnackbar(snackbarId)} />
+                    action: (snackbarId) => {
+                        return <Button
+                            color="inherit"
+                            size="small"
+                            children="Yes"
+                            onClick={() => {
+                                closeSnackbar(snackbarId)
+                                if (Notification.permission !== 'granted') Notification.requestPermission();
+                            }}
+                        />
+                    }
                 })
             });
     }
