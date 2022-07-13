@@ -86,7 +86,7 @@ const Panel = () => {
                 //     audioRef.muted = true;
                 //     audioRef.play();
                 // });
-                audioPlayBtn.current.play()
+                audioPlayBtn.current?.click()
 
             }
         }
