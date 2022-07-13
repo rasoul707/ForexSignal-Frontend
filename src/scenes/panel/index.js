@@ -73,6 +73,7 @@ const Panel = () => {
             .catch(error => {
                 enqueueSnackbar("Do you want to play a sound when receive signal?", {
                     variant: 'info',
+                    persist: true,
                     anchorOrigin: {
                         vertical: 'top',
                         horizontal: 'center'
