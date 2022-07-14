@@ -19,16 +19,6 @@ const theme = createTheme({
   }
 });
 
-// Or Create your Own theme:
-// const theme = createTheme({
-//   palette: {
-//     secondary: {
-//       main: '#E33E7F'
-//     }
-//   }
-// });
-
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -43,7 +33,7 @@ ReactDOM.render(
 );
 
 serviceWorker.register();
-// serviceWorker.unregister();
+
 
 
 reportWebVitals();

@@ -171,10 +171,10 @@ const Panel = () => {
         <Box component="main" sx={{ p: 3, }} >
             <Switch>
                 <Route path="/news/:news_id" component={NewsSingle} />
-                <Route path="/news" component={News} />
+                <Route path="/news" exact component={News} />
 
-                <Route path="/support" component={Support} />
-                <Route path="/profile" component={Profile} />
+                <Route path="/support" exact component={Support} />
+                <Route path="/profile" exact component={Profile} />
                 <Route path="/" component={Home} />
                 <Redirect to="/" />
             </Switch>

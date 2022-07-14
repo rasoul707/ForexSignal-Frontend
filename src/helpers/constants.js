@@ -1,3 +1,3 @@
 export const getReferralLink = (token) => {
-    return window.location.origin + '/?ref=' + token
+    return 'https://therealrole.com/?ref=' + token
 }
