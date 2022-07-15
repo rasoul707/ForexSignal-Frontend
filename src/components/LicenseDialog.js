@@ -85,7 +85,7 @@ const LicensesDialog = ({ open, handleClose, }) => {
 
     const _ChoosePlan = <>
         <DialogTitle>Choose plan</DialogTitle>
-        <DialogContent sx={{ minWidth: 400 }}>
+        <DialogContent>
             <LicenseAlert dialogMode />
             <Alert
                 severity="info"
@@ -107,10 +107,8 @@ const LicensesDialog = ({ open, handleClose, }) => {
 
     const _BuyPlan = <>
         <DialogTitle>Pay</DialogTitle>
-        <DialogContent sx={{ minWidth: 400 }}>
-
+        <DialogContent>
             <LicensePlanItem key={planSelected} {...licenseList[planSelected]} />
-
             <Typography sx={{ mt: 2 }}>
                 {payDescription}
             </Typography>

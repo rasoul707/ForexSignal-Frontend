@@ -50,7 +50,7 @@ const TermsDialog = ({ open, handleClose, }) => {
         onClose={closeDig}
     >
         <DialogTitle>Terms</DialogTitle>
-        <DialogContent sx={{ minWidth: 400 }}>
+        <DialogContent >
             <Typography>
                 {terms}
             </Typography>
