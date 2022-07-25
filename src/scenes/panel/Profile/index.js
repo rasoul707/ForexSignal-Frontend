@@ -2,9 +2,6 @@
 import * as React from 'react';
 import { Grid, } from '@mui/material';
 
-
-
-
 import Layout from "../../../components/Layout"
 import EditProfile from './EditProfile';
 import Referral from './Referral';

@@ -52,7 +52,10 @@ function App() {
       const response = await API.POST(false)('auth/token/refresh/', { refresh: refresh_token })
       localStorage.setItem("access_token", response.data.access);
     } catch (error) {
-
+      if (error !== undefined) {
+        localStorage.clear()
+        window.location.reload()
+      }
     }
   }
 

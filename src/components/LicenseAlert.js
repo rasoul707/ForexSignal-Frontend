@@ -2,10 +2,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Alert, Button } from '@mui/material';
 import moment from "moment"
+import { useHistory, } from "react-router-dom";
 
 
 
 const LicenseAlert = ({ dialogMode }) => {
+    const history = useHistory()
     const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch();
 
@@ -18,18 +20,30 @@ const LicenseAlert = ({ dialogMode }) => {
         dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
     }
 
-
+    const openSupport = () => {
+        history.push("/support")
+    }
 
     if (!license) {
-        return <Alert
-            severity="error"
-            sx={{ mb: 2 }}
-            action={
-                dialogMode ??
-                <Button color="inherit" size="small" onClick={openLicenseDig} children="Buy license" />
-            }
-            children="Your don't have any license"
-        />
+        return [
+            <Alert
+                severity="error"
+                sx={{ mb: 2 }}
+                action={
+                    dialogMode ??
+                    <Button color="inherit" size="small" onClick={openLicenseDig} children="Buy license" />
+                }
+                children="Your don't have any license"
+            />,
+            <Alert
+                severity="info"
+                sx={{ mb: 2 }}
+                action={
+                    <Button color="inherit" size="small" onClick={openSupport} children="Support" />
+                }
+                children="For demo, contact support!"
+            />
+        ]
     }
     else if (license.is_trial) {
         if (expiration <= 0) {
