@@ -93,7 +93,9 @@ const Panel = () => {
                     children="Yes"
                     onClick={() => {
                         closeSnackbar(snackbarId)
+
                         if (isNotificationSupported() && Notification.permission !== 'granted') Notification.requestPermission()
+                        else audioPlayer.current.load()
                     }}
                 />
             }
