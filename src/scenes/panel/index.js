@@ -51,12 +51,7 @@ const Panel = () => {
             setTimeout(async () => {
                 await getSignalsAlertList()
             }, 500)
-            if (isNotificationSupported) {
-                showAllowNotifyAlert()
-            }
-            else {
-                popupAllow()
-            }
+            showAllowNotifyAlert()
         }
     }, [user?.broker])
 
@@ -82,12 +77,6 @@ const Panel = () => {
         'PushManager' in window
 
     const showAllowNotifyAlert = () => {
-        if (isNotificationSupported() && Notification.permission !== 'granted') {
-            popupAllow()
-        }
-    }
-
-    const popupAllow = () => {
         enqueueSnackbar("Do you want receive notification when arrive signal?", {
             variant: 'info',
             persist: true,
@@ -103,12 +92,13 @@ const Panel = () => {
                     children="Yes"
                     onClick={() => {
                         closeSnackbar(snackbarId)
-                        if (isNotificationSupported) Notification.requestPermission()
+                        if (isNotificationSupported && Notification.permission !== 'granted') Notification.requestPermission()
                     }}
                 />
             }
         })
     }
+
 
 
 
