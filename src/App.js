@@ -6,8 +6,8 @@ import * as API from "./api";
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { Backdrop, CircularProgress, } from '@mui/material';
-import { useSnackbar } from 'notistack';
-import useNetworkStatus from './hooks/useNetworkStatus';
+// import { useSnackbar } from 'notistack';
+// import useNetworkStatus from './hooks/useNetworkStatus';
 
 import './App.css';
 
@@ -15,9 +15,9 @@ import './App.css';
 function App() {
 
   const [loadMain, setLoadMain] = useState(false)
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  // const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const dispatch = useDispatch()
-  const { isOnline } = useNetworkStatus();
+  // const { isOnline } = useNetworkStatus();
 
 
   const appLoader = (payload) => dispatch({ type: 'BACKDROP', payload: { backdrop: payload } })
@@ -47,7 +47,7 @@ function App() {
 
 
   const refreshToken = async () => {
-    if (!isOnline) return
+    // if (!isOnline) return
     try {
       const response = await API.POST(false)('auth/token/refresh/', { refresh: refresh_token })
       localStorage.setItem("access_token", response.data.access);
@@ -88,23 +88,23 @@ function App() {
   }, [])
 
 
-  useEffect(() => {
-    if (isOnline) {
-      closeSnackbar()
-    }
-    else {
-      enqueueSnackbar("Check your internet connection",
-        {
-          variant: 'error',
-          persist: true,
-          anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center'
-          },
-          preventDuplicate: true
-        })
-    }
-  }, [isOnline])
+  // useEffect(() => {
+  //   // if (isOnline) {
+  //   //   closeSnackbar()
+  //   // }
+  //   // else {
+  //   //   enqueueSnackbar("Check your internet connection",
+  //   //     {
+  //   //       variant: 'error',
+  //   //       persist: true,
+  //   //       anchorOrigin: {
+  //   //         vertical: 'top',
+  //   //         horizontal: 'center'
+  //   //       },
+  //   //       preventDuplicate: true
+  //   //     })
+  //   // }
+  // }, [isOnline])
 
 
   return <>
