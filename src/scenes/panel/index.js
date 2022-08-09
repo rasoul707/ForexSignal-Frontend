@@ -120,7 +120,6 @@ const Panel = () => {
         audioRef.play()
             .then(_ => { })
             .catch(error => {
-                alert(error.toString())
                 showAllowNotifyAlert()
             });
     }
