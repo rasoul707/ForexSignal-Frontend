@@ -51,7 +51,12 @@ const Panel = () => {
             setTimeout(async () => {
                 await getSignalsAlertList()
             }, 500)
-            showAllowNotifyAlert()
+            if (isNotificationSupported) {
+                showAllowNotifyAlert()
+            }
+            else {
+                popupAllow()
+            }
         }
     }, [user?.broker])
 
@@ -71,30 +76,38 @@ const Panel = () => {
         })
     }
 
-    const showAllowNotifyAlert = () => {
-        if (Notification.permission !== 'granted') {
-            enqueueSnackbar("Do you want receive notification when arrive signal?", {
-                variant: 'info',
-                persist: true,
-                anchorOrigin: {
-                    vertical: 'top',
-                    horizontal: 'center'
-                },
-                preventDuplicate: true,
-                action: (snackbarId) => {
-                    return <Button
-                        color="inherit"
-                        size="small"
-                        children="Yes"
-                        onClick={() => {
-                            closeSnackbar(snackbarId)
-                            Notification.requestPermission();
-                        }}
-                    />
-                }
-            })
-        }
+    const isNotificationSupported = () =>
+        'Notification' in window &&
+        'serviceWorker' in navigator &&
+        'PushManager' in window
 
+    const showAllowNotifyAlert = () => {
+        if (isNotificationSupported() && Notification.permission !== 'granted') {
+            popupAllow()
+        }
+    }
+
+    const popupAllow = () => {
+        enqueueSnackbar("Do you want receive notification when arrive signal?", {
+            variant: 'info',
+            persist: true,
+            anchorOrigin: {
+                vertical: 'top',
+                horizontal: 'center'
+            },
+            preventDuplicate: true,
+            action: (snackbarId) => {
+                return <Button
+                    color="inherit"
+                    size="small"
+                    children="Yes"
+                    onClick={() => {
+                        closeSnackbar(snackbarId)
+                        if (isNotificationSupported) Notification.requestPermission()
+                    }}
+                />
+            }
+        })
     }
 
 
@@ -117,7 +130,7 @@ const Panel = () => {
     const newSignalNotify = (data) => {
         const m = data.description.split(",")
         const body = " 💰" + data.title + " 🎯 " + m[0] + " ⏳ " + m[1];
-        if (Notification.permission === 'granted') {
+        if (isNotificationSupported() && Notification.permission === 'granted') {
             nativeNotification(body, data.created_datetime)
         }
         else {

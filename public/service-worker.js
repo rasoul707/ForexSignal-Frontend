@@ -1,4 +1,4 @@
-const cacheName = "cache-v302";
+const cacheName = "cache-v303";
 const staticAssets = [
     '/',
     '/news',
