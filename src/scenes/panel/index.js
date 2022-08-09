@@ -77,6 +77,7 @@ const Panel = () => {
         'PushManager' in window
 
     const showAllowNotifyAlert = () => {
+        if (isNotificationSupported() && Notification.permission === 'granted') return
         enqueueSnackbar("Do you want receive notification when arrive signal?", {
             variant: 'info',
             persist: true,
@@ -92,7 +93,7 @@ const Panel = () => {
                     children="Yes"
                     onClick={() => {
                         closeSnackbar(snackbarId)
-                        if (isNotificationSupported && Notification.permission !== 'granted') Notification.requestPermission()
+                        if (isNotificationSupported() && Notification.permission !== 'granted') Notification.requestPermission()
                     }}
                 />
             }
