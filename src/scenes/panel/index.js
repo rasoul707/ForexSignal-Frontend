@@ -50,9 +50,9 @@ const Panel = () => {
     }, [])
 
     const checkUser = () => {
-        setInterval(() => {
-            window.location.reload()
-        }, 15 * 1000 * 60)
+        // setInterval(() => {
+        // window.location.reload()
+        // }, 15 * 1000 * 60)
     }
 
     useEffect(() => {
