@@ -44,7 +44,16 @@ const Panel = () => {
             }
             else history.replace("/auth/signin/")
         }
+        else {
+            checkUser()
+        }
     }, [])
+
+    const checkUser = () => {
+        setInterval(() => {
+            window.location.reload()
+        }, 15 * 1000 * 60)
+    }
 
     useEffect(() => {
         if (user && user.broker) {
