@@ -146,6 +146,12 @@ const Panel = () => {
         if (!user) return
         if (!user.broker) return
 
+        if (!haveLicense(user)) {
+            dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
+            return
+        }
+
+
         try {
             const response = await API.GET(true)('notice/signal/?broker=' + user.broker + '&per=25')
             dispatch({ type: 'SIGNAL_LIST', payload: { signalsList: response.data.results } })
@@ -153,10 +159,8 @@ const Panel = () => {
             enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
         }
 
-        if (!haveLicense(user)) {
-            dispatch({ type: 'LICENSE_OPEN', payload: { open: true } })
-            return
-        }
+
+
 
 
         wsSignals(user.broker).onmessage = function (event) {
