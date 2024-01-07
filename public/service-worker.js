@@ -8,13 +8,13 @@ const staticAssets = [
     '/auth/signin',
     '/auth/signup',
 
-    '/static/js/bundle.js',
-    '/static/js/vendors~main.chunk.js',
-    '/static/js/main.chunk.js',
+    // '/static/js/bundle.js',
+    // '/static/js/vendors~main.chunk.js',
+    // '/static/js/main.chunk.js',
 
-    '/static/css/main.96e32a7a.chunk.css',
-    '/static/js/2.02067c48.chunk.js',
-    '/static/js/main.48ce0b60.chunk.js',
+    // '/static/css/main.96e32a7a.chunk.css',
+    // '/static/js/2.02067c48.chunk.js',
+    // '/static/js/main.48ce0b60.chunk.js',
 
 
 
