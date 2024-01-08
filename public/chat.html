@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript">
+        const queryString = window.location.search;
+        const parameters = new URLSearchParams(queryString);
+        window.$crisp = [];
+        window.CRISP_WEBSITE_ID = "47025786-a4b1-49cc-a741-437db1f1c41d";
+        window.CRISP_RUNTIME_CONFIG = {
+            lock_maximized: true,
+            lock_full_view: true,
+            cross_origin_cookies: true,
+        };
+        $crisp.push(["set", "user:email", parameters.get('email')]);
+        $crisp.push(["set", "user:nickname", parameters.get('nickname')]);
+        (function () {
+            const d = document;
+            const s = d.createElement("script");
+            s.src = "https://client.crisp.chat/l.js";
+            s.async = 1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+    </script>
+    <title>Support</title>
+</head>
+</html>

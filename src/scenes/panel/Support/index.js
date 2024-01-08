@@ -18,7 +18,7 @@ const Page = () => {
             <CircularProgress size={20} />
             <iframe
                 title="help"
-                src={"https://therealrole.com:2096/chat?email=" + user.email + "&nickname=" + user.first_name + " " + user.last_name}
+                src={"https://trader-robot.com/chat.html?email=" + user.email + "&nickname=" + user.first_name + " " + user.last_name}
                 style={{
                     top: 0,
                     left: 0,
