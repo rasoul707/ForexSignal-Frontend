@@ -53,7 +53,7 @@ export default SignalsList
 
 
 
-const SignalItem = ({ title, description, detail: content, broker, created_datetime, percent, winrate, isLast }) => {
+const SignalItem = ({ title, description, success, detail: content, broker, created_datetime, percent, winrate, isLast }) => {
     let direction
     let timeFrame
     const detail = description.split(",")
@@ -104,8 +104,8 @@ const SignalItem = ({ title, description, detail: content, broker, created_datet
     return <ListItem
         alignItems="flex-start"
         divider={isLast}
-        sx={{ pr: 2, overflow: 'hidden', }}
-        disabled={moment().diff(moment(created_datetime), 'seconds') > 15}
+        sx={{ pr: 2, overflow: 'hidden', backgroundColor: success === null ? "#fff" : success ? "#d0ffd0" : "#ffb2b2" }}
+        disabled={moment().diff(moment(created_datetime), 'seconds') > 30}
     >
         <Grid container flexDirection="row" alignItems="center">
 
