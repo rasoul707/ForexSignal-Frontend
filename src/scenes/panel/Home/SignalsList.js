@@ -53,7 +53,7 @@ export default SignalsList
 
 
 
-const SignalItem = ({ title, description, broker, created_datetime, isLast }) => {
+const SignalItem = ({ title, description, detail: content, broker, created_datetime, percent, winrate, isLast }) => {
     let direction
     let timeFrame
     const detail = description.split(",")
@@ -129,11 +129,29 @@ const SignalItem = ({ title, description, broker, created_datetime, isLast }) =>
                                     color="text.primary"
                                     children={broker.name}
                                 />
-                                {" — Only 2.5% of the budget"}
+                                {` — Only ${percent}% of the budget`}
                             </React.Fragment>
                         }
                     />
                 </Grid>
+                {!!winrate && <Grid item>
+                    <ListItemText
+                        secondary={
+                            <React.Fragment>
+                                {` Win Rate: ${winrate}`}
+                            </React.Fragment>
+                        }
+                    />
+                </Grid>}
+                {!!content && <Grid item>
+                <ListItemText
+                    secondary={
+                        <React.Fragment>
+                            {` Detail: ${content}`}
+                        </React.Fragment>
+                    }
+                />
+            </Grid>}
             </Grid>
 
             <Grid item xs="auto" sx={{ position: 'absolute', right: '20px' }}>
