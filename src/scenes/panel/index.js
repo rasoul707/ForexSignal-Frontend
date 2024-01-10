@@ -140,6 +140,37 @@ const Panel = () => {
         }
     }
 
+    function webSocketConnect() {
+
+        const ws = wsSignals(user.broker);
+        ws.onopen = function() {
+            console.log("WebSocket Connected!")
+        };
+
+        ws.onmessage = function(event) {
+            const { data } = JSON.parse(event.data);
+            if (!data.id) {
+                dispatch({
+                    type: 'SIGNAL_LIST_ADD',
+                    payload: { signal: data }
+                })
+                newSignalNotify(data);
+            }
+        };
+
+        ws.onclose = function(e) {
+            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+            setTimeout(function() {
+                webSocketConnect();
+            }, 1000);
+        };
+
+        ws.onerror = function(err) {
+            console.error('Socket encountered error: ', err.message, 'Closing socket');
+            ws.close();
+        };
+    }
+
 
     const getSignalsAlertList = async () => {
 
@@ -159,20 +190,7 @@ const Panel = () => {
             enqueueSnackbar("[getsignals]: ".toUpperCase() + JSON.stringify(error?.data?.message), { variant: 'error' })
         }
 
-
-
-
-
-        wsSignals(user.broker).onmessage = function (event) {
-            const { data } = JSON.parse(event.data);
-            if (!data.id) {
-                dispatch({
-                    type: 'SIGNAL_LIST_ADD',
-                    payload: { signal: data }
-                })
-                newSignalNotify(data);
-            }
-        }
+        webSocketConnect()
 
     }
 
