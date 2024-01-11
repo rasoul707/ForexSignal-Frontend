@@ -51,12 +51,16 @@ export const panelReducer = (state = panelInitial, action) => {
                 signalsList: action.payload.signalsList
             }
         case 'SIGNAL_LIST_ADD':
-            if (!action.payload.signal.id) {
-                action.payload.signal.created_datetime = moment().toISOString()
-            }
             return {
                 ...state,
                 signalsList: [action.payload.signal, ...state.signalsList]
+            }
+        case 'SIGNAL_RESULT':
+            const ii = state.signalsList.findIndex((v) => v.id === action.payload.signal.id)
+            state.signalsList[ii] = action.payload.signal
+            return {
+                ...state,
+                signalsList: [...state.signalsList]
             }
         case 'NEWS_LIST':
             return {

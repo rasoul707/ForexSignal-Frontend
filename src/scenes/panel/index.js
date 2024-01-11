@@ -148,13 +148,19 @@ const Panel = () => {
         };
 
         ws.onmessage = function(event) {
-            const { data } = JSON.parse(event.data);
-            if (!data.id) {
+            const { data, type } = JSON.parse(event.data);
+            if (type === 'new_signal') {
                 dispatch({
                     type: 'SIGNAL_LIST_ADD',
                     payload: { signal: data }
                 })
                 newSignalNotify(data);
+            }
+            else if (type === 'signal_result') {
+                dispatch({
+                    type: 'SIGNAL_RESULT',
+                    payload: { signal: data }
+                })
             }
         };
 
