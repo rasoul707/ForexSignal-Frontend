@@ -57,6 +57,7 @@ export const panelReducer = (state = panelInitial, action) => {
             }
         case 'SIGNAL_RESULT':
             const ii = state.signalsList.findIndex((v) => v.id === action.payload.signal.id)
+            console.log(ii)
             state.signalsList[ii] = action.payload.signal
             return {
                 ...state,

@@ -149,6 +149,7 @@ const Panel = () => {
 
         ws.onmessage = function(event) {
             const { data, type } = JSON.parse(event.data);
+            console.log(type, data)
             if (type === 'new_signal') {
                 dispatch({
                     type: 'SIGNAL_LIST_ADD',
