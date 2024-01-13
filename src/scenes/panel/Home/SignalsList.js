@@ -105,7 +105,7 @@ const SignalItem = ({ title, description, success, detail: content, broker, crea
         alignItems="flex-start"
         divider={isLast}
         sx={{ pr: 2, overflow: 'hidden', backgroundColor: success === null ? "#fff" : success ? "#d0ffd0" : "#ffb2b2" }}
-        disabled={moment().diff(moment(created_datetime), 'seconds') > 30}
+        disabled={moment().diff(moment(created_datetime), 'seconds') > 30 || !!success}
     >
         <Grid container flexDirection="row" alignItems="center">
 
